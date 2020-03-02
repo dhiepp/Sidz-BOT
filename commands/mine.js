@@ -48,7 +48,7 @@ module.exports = {
 			// Also using this random value to calculate the chance of unbreaking
 			// If the random value is below the breaking percent then the pick lose durability
 			// Unbreaking below 5 = +10% each level, from 6 = + 5% each level
-			const unbreakChance = (user.unbreaking <= 5) ? user.ubreaking * 10 : user.unbreaking * 5 + 25;
+			const unbreakChance = (user.unbreaking <= 5) ? user.unbreaking * 10 : user.unbreaking * 5 + 25;
 			if (ran <= (100 - unbreakChance)) {
 				// If the pick is broken, stop the loop (1 bonus resource)
 				// Also works as none pick filter
@@ -70,11 +70,13 @@ module.exports = {
 			}
 		}
 
-		// console.log(mined);
 		for (const item in mined) {
 			inv[item] += mined[item];
-			user.blocks += mined[item];
 		}
+
+		// Increase blocks mined
+		user.blocks += 1 + user.efficiency;
+
 		inventorydata.updateItems(message.author.id, inv);
 		userdata.mining(message.author, user.xp + gainedXP, user.durability, user.blocks);
 		// Break the pickaxe if not hand

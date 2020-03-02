@@ -56,6 +56,7 @@ module.exports = {
 
 		user.xp = xp;
 		user.durability = durability;
+		user.blocks = blocks;
 		try {
 			pool.query('UPDATE user SET xp = ?, durability = ?, blocks = ? WHERE id = ?', [xp, durability, blocks, id]);
 		}
