@@ -1,0 +1,19 @@
+{
+  "name": "sidz_bot",
+  "version": "1.0.0",
+  "description": "Discord Bot of Sidz",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "dhiep",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "eslint": "^6.8.0",
+    "mysql2": "^2.1.0",
+    "node-cache": "^5.1.0",
+    "node-fetch": "^2.6.0"
+  }
+}

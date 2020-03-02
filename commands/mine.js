@@ -1,0 +1,95 @@
+const { footer } = require('../config.json');
+const Discord = require('discord.js');
+const resources = require('../mining/resources.json');
+const pickaxes = require('../mining/pickaxes.json');
+const enchants = require('../mining/enchants.json');
+const { experience } = require('../mining/currency.json');
+const userdata = require('../mining/userdata.js');
+const inventorydata = require('../mining/inventorydata.js');
+
+module.exports = {
+	name: 'mine',
+	description: 'Go mining...',
+	cooldown: 5,
+	async execute(message) {
+
+		// Get user data
+		const user = await userdata.getUser(message.author);
+		// Get inventory
+		const inv = await inventorydata.getInv(message.author.id);
+
+		const pick = pickaxes[user.pickaxe];
+		let enchantMessage = '';
+		const mined = [];
+
+		for (const enchant in enchants) {
+			if (user[enchant] > 0) {
+				enchantMessage += `\n${enchants[enchant].name} ${user[enchant]}`;
+			}
+		}
+
+		for (const mineable of pick.mineable) {
+			mined[mineable] = 0;
+		}
+
+		for (let i = 0; i <= user.efficiency; i++) {
+			const ran = Math.random() * 100;
+			let percent = 0;
+
+			for (const mineable of pick.mineable) {
+				const resource = resources[mineable];
+				percent += resource.chance;
+				if (ran <= percent) {
+					mined[mineable]++;
+					break;
+				}
+			}
+
+			// Also using this random value to calculate the chance of unbreaking
+			// If the random value is below the breaking percent then the pick lose durability
+			if (ran <= (100 - user.unbreaking * 9)) {
+				// If the pick is broken, stop the loop (1 bonus resource)
+				// Also works as none pick filter
+				if (user.durability <= 0) break;
+				user.durability--;
+			}
+		}
+
+		let minedMessage = '';
+		let gainedXP = 0;
+
+		for (const resource in resources) {
+			if (mined[resource] > 0) {
+				// XP does not multiply with fortune
+				gainedXP += resources[resource].worth * mined[resource];
+				// Multiple by fortune level
+				mined[resource] *= user.fortune + 1;
+				minedMessage += `${resources[resource].icon} **x${mined[resource]}** `;
+			}
+		}
+
+		// console.log(mined);
+		for (const item in mined) {
+			inv[item] += mined[item];
+			user.blocks += mined[item];
+		}
+		inventorydata.updateItems(message.author.id, inv);
+		userdata.mining(message.author, user.xp + gainedXP, user.durability, user.blocks);
+		// Break the pickaxe if not hand
+		if (user.durability <= 0 && user.pickaxe !== 'none') {
+			enchantMessage += '\n💥 **Pickaxe của bạn đã bị hỏng!**';
+			userdata.updatePickaxe(message.author, 'none', 0, true);
+		}
+
+		const embed = new Discord.RichEmbed()
+			.setAuthor(`${message.author.username} đã đi mine!`, message.author.avatarURL)
+			.setTitle(`${pick.icon} ${pick.name} \`[${user.durability}/${pick.durability}]\``)
+			.setColor('GREEN')
+			.setDescription(enchantMessage)
+			.addField('Mined Resources', minedMessage)
+			.addField('Experience Gained', `${experience.icon} **${gainedXP}**`)
+			.setFooter(footer);
+
+		message.channel.send(embed);
+	},
+};

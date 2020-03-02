@@ -1,0 +1,86 @@
+{
+	"wood": {
+		"id": 0,
+		"name": "Wood",
+		"icon": "<:Wood:680442683944075270>",
+		"worth": 0,
+		"chance": 100
+	},
+	"cobble": {
+		"id": 1,
+		"name": "Cobble",
+		"icon": "<:Cobblestone:680442683742748688>",
+		"worth": 1,
+		"chance": 100
+	},
+	"coal": {
+		"id": 2,
+		"name": "Coal",
+		"icon": "<:Coal:680442683751399454>",
+		"worth": 2,
+		"chance": 20
+	},
+	"iron": {
+		"id": 3,
+		"name": "Iron",
+		"icon": "<:Iron:680442683923366087>",
+		"worth": 3,
+		"chance": 16
+	},
+	"redstone": {
+		"id": 4,
+		"name": "Redstone",
+		"icon": "<:Redstone:680442683776434262>",
+		"worth": 4,
+		"chance": 10
+	},
+	"gold": {
+		"id": 5,
+		"name": "Gold",
+		"icon": "<:Gold:680442683474444303>",
+		"worth": 5,
+		"chance": 8
+	},
+	"lapis": {
+		"id": 6,
+		"name": "Lapis",
+		"icon": "<:Lapis:680442683910783047>",
+		"worth": 10,
+		"chance": 5
+	},
+	"diamond": {
+		"id": 7,
+		"name": "Diamond",
+		"icon": "<:Diamond:680442683797405734>",
+		"worth": 20,
+		"chance": 4
+	},
+	"emerald": {
+		"id": 8,
+		"name": "Emerald",
+		"icon": "<:Emerald:680442683915108377>",
+		"worth": 50,
+		"chance": 2
+	},
+	"netherite": {
+		"id": 9,
+		"name": "Netherite",
+		"icon": "<:Netherite:680442683915108414>",
+		"worth": 100,
+		"chance": 1
+	},
+	"glowstone": {
+		"id": 10,
+		"name": "Glowstone",
+		"icon": "<:Glowstone:680442683915108433>",
+		"worth": 250,
+		"chance": 0.4
+	},
+	"quartz": {
+		"id": 11,
+		"name": "Quartz",
+		"icon": "<:Quartz:680442683915108432>",
+		"worth": 1000,
+		"chance": 0.1
+	}
+}

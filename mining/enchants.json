@@ -1,0 +1,23 @@
+{
+	"efficiency": {
+		"id": 1,
+		"name": "Efficiency",
+		"description": "Tăng số lượng tài nguyên đào được mỗi lần đi mine",
+		"max": 10,
+		"prices": [10, 50, 200, 400, 500, 600, 700, 800, 900, 1000]
+	},
+	"unbreaking": {
+		"id": 2,
+		"name": "Unbreaking",
+		"description": "Tăng khả năng giữ lại độ bền khi đào",
+		"max": 10,
+		"prices": [50, 250, 1000, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
+	},
+	"fortune": {
+		"id": 3,
+		"name": "Fortune",
+		"description": "Tăng số lượng với mỗi tài nguyên đào được",
+		"max": 10,
+		"prices": [100, 500, 2000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+	}
+}

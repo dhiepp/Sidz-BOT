@@ -1,0 +1,8 @@
+# Visual Code folder
+/.vscode
+
+# Node modules
+/node_modules
+
+# Private commands
+/commands/[bw]*
