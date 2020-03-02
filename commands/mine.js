@@ -47,7 +47,9 @@ module.exports = {
 
 			// Also using this random value to calculate the chance of unbreaking
 			// If the random value is below the breaking percent then the pick lose durability
-			if (ran <= (100 - user.unbreaking * 9)) {
+			// Unbreaking below 5 = +10% each level, from 6 = + 5% each level
+			const unbreakChance = (user.unbreaking <= 5) ? user.ubreaking * 10 : user.unbreaking * 5 + 25;
+			if (ran <= (100 - unbreakChance)) {
 				// If the pick is broken, stop the loop (1 bonus resource)
 				// Also works as none pick filter
 				if (user.durability <= 0) break;
