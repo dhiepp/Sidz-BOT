@@ -31,14 +31,14 @@
 		"id": 4,
 		"name": "Redstone",
 		"icon": "<:Redstone:680442683776434262>",
-		"worth": 4,
+		"worth": 5,
 		"chance": 10
 	},
 	"gold": {
 		"id": 5,
 		"name": "Gold",
 		"icon": "<:Gold:680442683474444303>",
-		"worth": 5,
+		"worth": 6,
 		"chance": 8
 	},
 	"lapis": {
@@ -52,35 +52,35 @@
 		"id": 7,
 		"name": "Diamond",
 		"icon": "<:Diamond:680442683797405734>",
-		"worth": 20,
+		"worth": 12,
 		"chance": 4
 	},
 	"emerald": {
 		"id": 8,
 		"name": "Emerald",
 		"icon": "<:Emerald:680442683915108377>",
-		"worth": 50,
+		"worth": 25,
 		"chance": 2
 	},
 	"netherite": {
 		"id": 9,
 		"name": "Netherite",
 		"icon": "<:Netherite:680442683915108414>",
-		"worth": 100,
+		"worth": 50,
 		"chance": 1
 	},
 	"glowstone": {
 		"id": 10,
 		"name": "Glowstone",
 		"icon": "<:Glowstone:680442683915108433>",
-		"worth": 250,
+		"worth": 125,
 		"chance": 0.4
 	},
 	"quartz": {
 		"id": 11,
 		"name": "Quartz",
 		"icon": "<:Quartz:680442683915108432>",
-		"worth": 1000,
+		"worth": 500,
 		"chance": 0.1
 	}
 }
