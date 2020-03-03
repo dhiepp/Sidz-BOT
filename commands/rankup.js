@@ -33,6 +33,7 @@ module.exports = {
 		}
 
 		userdata.updateRank(message.author, nextRank, nextPres);
+		userdata.updateMoney(message.author, user.money - price);
 
 		const embed = new Discord.RichEmbed()
 			.setAuthor(`${message.author.username}`, message.author.avatarURL)
