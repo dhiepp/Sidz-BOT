@@ -56,32 +56,8 @@ module.exports = {
 		xpAmount = Math.ceil((1 - user.durability / pick.durability) * xpAmount);
 		moneyCost = Math.ceil(resAmount * resource.worth + xpAmount / 2);
 
-		// Show fix prices
-		if (args.length == 0) {
-			let pickMessage = `${pick.icon} **${pick.name}** \`[${user.durability}/${pick.durability}]\``;
-			for (const enchantName in enchants) {
-				const enchant = enchants[enchantName];
-				const level = user[enchantName];
-				if (level > 0) {
-					pickMessage += `\n${enchant.name} ${level}`;
-				}
-			}
-
-			const embed = new Discord.RichEmbed()
-				.setAuthor(message.author.username, message.author.avatarURL)
-				.setColor('LUMINOUS_VIVID_PINK')
-				.setTitle('🩹 Fixing pickaxe')
-				.setDescription(pickMessage)
-				.addField('Chi phí sửa chữa', `${resource.icon} **${resAmount}** ${resource.name}`
-					+ `\n${experience.icon} **${xpAmount}** ${experience.name}\n${dollar.icon} **${moneyCost}** ${dollar.name}`)
-				.addField('Bạn có muốn sửa pickaxe này không?', 'Dùng lệnh `s.fix yes` để xác nhận')
-				.setFooter(footer);
-
-			message.channel.send(embed);
-		}
-
-		// Do fixing
-		if (args.length >= 1) {
+		// Do fixing (check for args)
+		if (args.length >= 1 && args[0].toLowerCase() === 'yes') {
 			const inv = await inventorydata.getInv(message.author.id);
 			// Check resources, xp and money
 			if (inv[material] < resAmount) {
@@ -108,6 +84,31 @@ module.exports = {
 			userdata.updatePickaxe(message.author, user.pickaxe, pick.durability, false);
 
 			message.channel.send(`✅ **${message.author.username}**, bạn đã sửa chữa thành công ${pick.icon} **${pick.name}**`);
+			return;
 		}
+
+		// Show fix prices
+
+		let pickMessage = `${pick.icon} **${pick.name}** \`[${user.durability}/${pick.durability}]\``;
+		for (const enchantName in enchants) {
+			const enchant = enchants[enchantName];
+			const level = user[enchantName];
+			if (level > 0) {
+				pickMessage += `\n${enchant.name} ${level}`;
+			}
+		}
+
+		const embed = new Discord.RichEmbed()
+			.setAuthor(message.author.username, message.author.avatarURL)
+			.setColor('LUMINOUS_VIVID_PINK')
+			.setTitle('🩹 Fixing pickaxe')
+			.setDescription(pickMessage)
+			.addField('Chi phí sửa chữa', `${resource.icon} **${resAmount}** ${resource.name}`
+				+ `\n${experience.icon} **${xpAmount}** ${experience.name}\n${dollar.icon} **${moneyCost}** ${dollar.name}`)
+			.addField('Bạn có muốn sửa pickaxe này không?', 'Dùng lệnh `s.fix yes` để xác nhận')
+			.setFooter(footer);
+
+		message.channel.send(embed);
+
 	},
 };
