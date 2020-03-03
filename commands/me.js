@@ -16,7 +16,7 @@ module.exports = {
 			.setAuthor(`Tài khoản của ${message.author.username}`, message.author.avatarURL)
 			.setColor('BLUE')
 			.setDescription(`Rank: **${user.rank}${user.prestige}**`
-				+ `\nMultiplier: **x${user.prestige * 0.1 + 0.9}**`
+				+ `\nMultiplier: **x${(user.prestige * 0.1 + 0.9).toFixed(1)}**`
 				+ `\nTài sản: ${dollar.icon} **${user.money} ${dollar.name}**`
 				+ `\nKinh nghiệm: ${experience.icon} **${user.xp}**`
 				+ `\nĐã đào: **${user.blocks}** blocks`)
