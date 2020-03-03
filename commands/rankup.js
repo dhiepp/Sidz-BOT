@@ -35,7 +35,7 @@ module.exports = {
 		const embed = new Discord.RichEmbed()
 			.setAuthor(`${message.author.username}`, message.author.avatarURL)
 			.setColor('GREEN')
-			.setTitle(`Bạn đã lên rank **${nextRank}${currentPres}**!`)
+			.setDescription(`Bạn đã lên rank **${nextRank}${currentPres}**!`)
 			.setFooter(footer);
 
 		message.channel.send(embed);
