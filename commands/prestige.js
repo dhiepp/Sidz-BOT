@@ -26,7 +26,7 @@ module.exports = {
 		}
 
 		if (user.money < price) {
-			message.channel.send(`🚫 **${message.author.username}**! Bạn không có đủ ${dollar.icon} **${dollar.name}** để lên cấp! \`${user.money}/${price}\``);
+			message.channel.send(`🚫 **${message.author.username}**! Bạn không có đủ ${dollar.icon} **${dollar.name}** để lên cấp! \`(${user.money}/${price})\``);
 			return;
 		}
 
@@ -36,7 +36,7 @@ module.exports = {
 			.setAuthor(`${message.author.username}`, message.author.avatarURL)
 			.setColor('BLUE')
 			.setTitle('⏫ Bạn có muốn lên cấp tiếp theo không?')
-			.setDescription(`Cấp độ tiếp theo: **${nextPres}**\nGiá bán khoáng sản: **${newMul}**`
+			.setDescription(`Cấp độ tiếp theo: **${nextPres}**\nGiá bán khoáng sản: **x${newMul}**`
 				+ `\nYêu cầu: ${dollar.icon} **${price.toLocaleString()}** ${dollar.name}`)
 			.addField('⚠️ Lưu ý', 'Sau khi lên cấp những thứ sau sẽ được reset:'
 				+ `\n- ${dollar.icon} **${dollar.name}** và ${experience.icon} **${experience.name}**\n- Rương đồ và Pickaxe của bạn`)
@@ -73,6 +73,14 @@ module.exports = {
 };
 
 async function prestigeUp(message, nextPres) {
+	// Check again
+	// Get user data
+	const user = await userdata.getUser(message.author);
+	if (user.rank !== 'Z') {
+		message.channel.send(`🚫 **${message.author.username}**! Bạn phải đạt rank **Z** để lên cấp!`);
+		return;
+	}
+
 	// Reset inv
 	const inv = await inventorydata.getInv(message.author.id);
 	for (const resource in inv) {

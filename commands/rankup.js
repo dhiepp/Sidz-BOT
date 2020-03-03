@@ -25,7 +25,7 @@ module.exports = {
 		}
 
 		if (user.money < price) {
-			message.channel.send(`🚫 **${message.author.username}**! Bạn không có đủ ${dollar.icon} **${dollar.name}** để lên rank! \`${user.money}/${price}\``);
+			message.channel.send(`🚫 **${message.author.username}**! Bạn không có đủ ${dollar.icon} **${dollar.name}** để lên rank! \`(${user.money}/${price})\``);
 			return;
 		}
 

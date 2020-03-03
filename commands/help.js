@@ -28,7 +28,7 @@ module.exports = {
 			const embed2 = new Discord.RichEmbed()
 				.setColor('AQUA')
 				.setTitle(`🤖 Các câu lệnh của **${bot_name}**`)
-				.addField('⛏️ Trợ giúp chức năng đào khoáng sản',
+				.addField('⛏️ Trợ giúp chức năng đào khoáng sản `(1/2)`',
 					'Để đi mine hãy dùng lệnh `s.mine`'
 					+ '\nĐể chế tạo cúp: `s.craft`'
 					+ '\nĐể phù phép cúp: `s.enchant`'
@@ -44,6 +44,17 @@ module.exports = {
 			const embed3 = new Discord.RichEmbed()
 				.setColor('AQUA')
 				.setTitle(`🤖 Các câu lệnh của **${bot_name}**`)
+				.addField('⛏️ Trợ giúp chức năng đào khoáng sản `(2/2)`',
+					'\nĐể xem rank: `s.rank`'
+					+ '\nĐể lên rank: `s.rankup`'
+					+ '\nĐể lên cấp: `s.prestige`')
+				.addField('🔍 Trợ giúp chi tiết', `Sử dụng lệnh \`${prefix}help [command]\` để xem thông tin về lệnh nào đó!`);
+			helpPages.push(embed3);
+
+			// Page 4
+			const embed4 = new Discord.RichEmbed()
+				.setColor('AQUA')
+				.setTitle(`🤖 Các câu lệnh của **${bot_name}**`)
 				.addField('<:RedBed:683144711145652232> Trợ giúp chức năng tra cứu Bedwars',
 					'Để tra cứu thông tin: `s.bwstats`'
 					+ '\nĐể xem bảng xếp hạng: `s.bwlead`')
@@ -53,7 +64,7 @@ module.exports = {
 					+ '\nGiết ai đó: `s.kill`'
 					+ '\nPing: `s.ping`')
 				.addField('🔍 Trợ giúp chi tiết', `Sử dụng lệnh \`${prefix}help [command]\` để xem thông tin về lệnh nào đó!`);
-			helpPages.push(embed3);
+			helpPages.push(embed4);
 
 			let page = 0;
 
