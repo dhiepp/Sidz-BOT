@@ -84,6 +84,7 @@ module.exports = {
 function getPickEmbed(page) {
 	if (!pickEmbeds.length) {
 		for (const pickName in pickaxes) {
+			if (pickName === 'none') continue;
 			const pick = pickaxes[pickName];
 			const material = resources[pick.craft.material];
 			const amount = pick.craft.amount;
@@ -99,7 +100,7 @@ function getPickEmbed(page) {
 				.setDescription(`${pick.icon} **${pick.name}**\nĐộ bền: **${pick.durability}**\nNguyên liệu: ${material.icon} **x${amount}**`)
 				.addField('Khoáng sản đào được', mineableMessage)
 				.addField('⚠️ Lưu ý', 'Pickaxe cũ của bạn và tất cả enchants sẽ bị mất!'
-					+ `\nDùng lệnh \`s.craft ${pickName}\n\` để chế tạo`)
+					+ `\nDùng lệnh \`s.craft ${pickName}\n\` để chế tạo`);
 
 			pickEmbeds.push(embed);
 		}
