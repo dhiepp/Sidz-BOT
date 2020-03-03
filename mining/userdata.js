@@ -34,13 +34,24 @@ module.exports = {
 
 		return user;
 	},
-	async getTopMoney() {
-		let leaderboard = topCache.get('LEADERBOARD');
+	async getTop(type) {
+		let leaderboard = topCache.get(type);
 
-		// If top money is not cached
+		// If top is not cached
 		if (leaderboard === undefined) {
-			[leaderboard] = await pool.query('SELECT id, username, tag, money FROM user ORDER BY money DESC LIMIT 10');
-			topCache.set('LEADERBOARD', leaderboard, 600);
+			let sql = '';
+			switch (type) {
+			case 'rank':
+				sql = 'SELECT username, tag, rank, prestige FROM mining_bot.user ORDER BY prestige DESC, rank DESC LIMIT 10';
+				break;
+			case 'blocks':
+				sql = 'SELECT username, tag, blocks FROM mining_bot.user ORDER BY blocks DESC LIMIT 10';
+				break;
+			default:
+				sql = 'SELECT username, tag, money FROM user ORDER BY money DESC LIMIT 10';
+			}
+			[leaderboard] = await pool.query(sql);
+			topCache.set(type, leaderboard, 600);
 		}
 
 		return leaderboard;
