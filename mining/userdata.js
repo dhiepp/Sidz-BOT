@@ -2,7 +2,6 @@ const NodeCache = require('node-cache');
 const { pool } = require('../mysql.js');
 
 const userCache = new NodeCache();
-const topCache = new NodeCache();
 
 module.exports = {
 	async addUser(id, name, tag) {
@@ -35,26 +34,18 @@ module.exports = {
 		return user;
 	},
 	async getTop(type) {
-		let leaderboard = topCache.get(type);
-
-		// If top is not cached
-		if (leaderboard === undefined) {
-			let sql = '';
-			switch (type) {
-			case 'rank':
-				sql = 'SELECT username, tag, rank, prestige FROM mining_bot.user ORDER BY prestige DESC, rank DESC LIMIT 10';
-				break;
-			case 'blocks':
-				sql = 'SELECT username, tag, blocks FROM mining_bot.user ORDER BY blocks DESC LIMIT 10';
-				break;
-			default:
-				sql = 'SELECT username, tag, money FROM user ORDER BY money DESC LIMIT 10';
-			}
-			[leaderboard] = await pool.query(sql);
-			topCache.set(type, leaderboard, 600);
+		let sql = '';
+		switch (type) {
+		case 'rank':
+			sql = 'SELECT username, tag, rank, prestige FROM mining_bot.user ORDER BY prestige DESC, rank DESC LIMIT 10';
+			break;
+		case 'blocks':
+			sql = 'SELECT username, tag, blocks FROM mining_bot.user ORDER BY blocks DESC LIMIT 10';
+			break;
+		default:
+			sql = 'SELECT username, tag, money FROM user ORDER BY money DESC LIMIT 10';
 		}
-
-		return leaderboard;
+		return await pool.query(sql);
 	},
 	async mining(author, xp, durability, blocks) {
 		const id = author.id;
@@ -207,6 +198,5 @@ module.exports = {
 	},
 	reload() {
 		userCache.flushAll();
-		topCache.flushAll();
 	},
 };

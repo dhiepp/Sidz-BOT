@@ -1,7 +1,9 @@
 const Discord = require('discord.js');
+const NodeCache = require('node-cache');
 const userdata = require('../mining/userdata.js');
 const { dollar } = require('../mining/currency.json');
 
+const topCache = new NodeCache();
 const types = ['money', 'rank', 'blocks'];
 const typeNames = { money: 'Tài sản', rank: 'Rank', blocks: 'Blocks đã đào' };
 const numbers = [':one:', ':two:', ':three:', ':four:', ':five:', ':six:', ':seven:', ':eight:', ':nine:', ':keycap_ten:'];
@@ -50,7 +52,14 @@ module.exports = {
 };
 
 async function getTop(message, type) {
+	const embed = topCache.get(type);
 
+	// This top type is cached
+	if (embed !== undefined) {
+		return embed;
+	}
+
+	// Not cached yet
 	// Get leaderboard data
 	const leaderboard = await userdata.getTop(type);
 	// Get user data
@@ -77,13 +86,13 @@ async function getTop(message, type) {
 	let your = '';
 	switch (type) {
 	case 'rank':
-		your = `${numbers[count]} ${user.username}\`#${user.tag}\` : **${user.rank}${user.prestige}**\n`;
+		your = `${user.username}\`#${user.tag}\` : **${user.rank}${user.prestige}**\n`;
 		break;
 	case 'blocks':
-		your = `${numbers[count]} ${user.username}\`#${user.tag}\` : **${user.blocks}** blocks\n`;
+		your = `${user.username}\`#${user.tag}\` : **${user.blocks}** blocks\n`;
 		break;
 	default:
-		your = `${numbers[count]} ${user.username}\`#${user.tag}\` = ${dollar.icon} **${user.money.toLocaleString()} ${dollar.name}**\n`;
+		your = `${user.username}\`#${user.tag}\` = ${dollar.icon} **${user.money.toLocaleString()} ${dollar.name}**\n`;
 	}
 
 	return new Discord.RichEmbed()
