@@ -96,7 +96,7 @@ module.exports = {
 		// Apply rank multiplier
 		const mul = user.prestige * 0.1 + 0.9;
 		earned = Math.round(earned * mul);
-		const mulStr = mul > 0 ? `(${mul})` : '';
+		const mulStr = mul > 1 ? `(x${mul})` : '';
 
 		userdata.updateMoney(message.author, user.money + earned);
 		inventorydata.updateItems(message.author.id, inv);
