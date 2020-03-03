@@ -1,6 +1,5 @@
 const { footer } = require('../config.json');
 const Discord = require('discord.js');
-const ranks = require('../mining/ranks.json');
 const userdata = require('../mining/userdata.js');
 const inventorydata = require('../mining/inventorydata.js');
 const { dollar, experience } = require('../mining/currency.json');
@@ -18,15 +17,9 @@ module.exports = {
 		const currentRank = user.rank;
 		const currentPres = user.prestige;
 		const nextPres = currentPres + 1;
-		const price = Math.round(ranks.Z * (currentPres * 0.2 + 0.8));
 
 		if (currentRank !== 'Z') {
 			message.channel.send(`🚫 **${message.author.username}**! Bạn phải đạt rank **Z** để lên cấp!`);
-			return;
-		}
-
-		if (user.money < price) {
-			message.channel.send(`🚫 **${message.author.username}**! Bạn không có đủ ${dollar.icon} **${dollar.name}** để lên cấp! \`(${user.money}/${price})\``);
 			return;
 		}
 
@@ -36,8 +29,7 @@ module.exports = {
 			.setAuthor(`${message.author.username}`, message.author.avatarURL)
 			.setColor('BLUE')
 			.setTitle('⏫ Bạn có muốn lên cấp tiếp theo không?')
-			.setDescription(`Cấp độ tiếp theo: **${nextPres}**\nGiá bán khoáng sản: **x${newMul}**`
-				+ `\nYêu cầu: ${dollar.icon} **${price.toLocaleString()}** ${dollar.name}`)
+			.setDescription(`Cấp độ tiếp theo: **${nextPres}**\nGiá bán khoáng sản: **x${newMul}**`)
 			.addField('⚠️ Lưu ý', 'Sau khi lên cấp những thứ sau sẽ được reset:'
 				+ `\n- ${dollar.icon} **${dollar.name}** và ${experience.icon} **${experience.name}**\n- Rương đồ và Pickaxe của bạn`)
 			.addField('Xác nhận', 'React với ✅ để xác nhận lên cấp')
