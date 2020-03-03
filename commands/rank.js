@@ -20,7 +20,7 @@ module.exports = {
 
 		let rankMessage = `Rank hiện tại: **${currentRank}${currentPres}**`
 			+ `\nRank tiếp theo: **${nextRank}${currentPres}**`
-			+ `\nYêu cầu: ${dollar.icon} **${price}** ${dollar.name}`;
+			+ `\nYêu cầu: ${dollar.icon} **${price.toLocaleString()}** ${dollar.name}`;
 		let helpMessage = ['🔼 Lên rank', 'Dùng lệnh `s.rankup` để lên rank'];
 
 		if (currentRank === 'Z') {

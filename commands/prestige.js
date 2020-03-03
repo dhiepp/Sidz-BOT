@@ -29,14 +29,14 @@ module.exports = {
 			return;
 		}
 
-		const newMul = (nextPres * 0.1 + 0.9).toFixed(2);
+		const newMul = (nextPres * 0.1 + 0.9).toFixed(1);
 
 		const embed = new Discord.RichEmbed()
 			.setAuthor(`${message.author.username}`, message.author.avatarURL)
 			.setColor('BLUE')
 			.setTitle('⏫ Bạn có muốn lên cấp tiếp theo không?')
 			.setDescription(`Cấp độ tiếp theo: **${nextPres}**\nGiá bán khoáng sản: **${newMul}**`
-				+ `\nYêu cầu: ${dollar.icon} **${price}** ${dollar.name}`)
+				+ `\nYêu cầu: ${dollar.icon.toLocaleString()} **${price}** ${dollar.name}`)
 			.addField('⚠️ Lưu ý', 'Sau khi lên cấp những thứ sau sẽ được reset:'
 				+ `\n- ${dollar.icon} **${dollar.name}** và ${experience.icon} **${experience.name}**\n- Rương đồ và Pickaxe của bạn`)
 			.addField('Xác nhận', 'React với ✅ để xác nhận lên cấp')
@@ -84,7 +84,7 @@ async function prestigeUp(message, nextPres) {
 		return;
 	}
 
-	const newMul = (nextPres * 0.1 + 0.9).toFixed(2);
+	const newMul = (nextPres * 0.1 + 0.9).toFixed(1);
 
 	const embed = new Discord.RichEmbed()
 		.setAuthor(`${message.author.username}`, message.author.avatarURL)

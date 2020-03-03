@@ -104,7 +104,7 @@ module.exports = {
 			.setTitle('🩹 Fixing pickaxe')
 			.setDescription(pickMessage)
 			.addField('Chi phí sửa chữa', `${resource.icon} **${resAmount}** ${resource.name}`
-				+ `\n${experience.icon} **${xpAmount}** ${experience.name}\n${dollar.icon} **${moneyCost}** ${dollar.name}`)
+				+ `\n${experience.icon} **${xpAmount}** ${experience.name}\n${dollar.icon} **${moneyCost.toLocaleString()}** ${dollar.name}`)
 			.addField('Bạn có muốn sửa pickaxe này không?', 'Dùng lệnh `s.fix yes` để xác nhận')
 			.setFooter(footer);
 

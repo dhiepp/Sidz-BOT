@@ -105,7 +105,7 @@ module.exports = {
 			.setAuthor(`${message.author.username} đã bán khoáng sản!`, message.author.avatarURL)
 			.setColor('GREEN')
 			.addField('Resources Sold', soldMessage)
-			.addField('Money Earned', `${dollar.icon} **+${earned}** ${dollar.name}${mulStr}`)
+			.addField('Money Earned', `${dollar.icon} **+${earned.toLocaleString()}** ${dollar.name}${mulStr}`)
 			.setFooter(footer);
 
 		message.channel.send(embed);

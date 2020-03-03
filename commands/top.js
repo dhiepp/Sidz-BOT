@@ -21,7 +21,7 @@ module.exports = {
 		let count = 0;
 		for (const pos in leaderboard) {
 			const player = leaderboard[pos];
-			leaderboardMessage += `${numbers[count]} ${player.username}\`#${player.tag}\` = ${dollar.icon} **${player.money} ${dollar.name}**\n`;
+			leaderboardMessage += `${numbers[count]} ${player.username}\`#${player.tag}\` = ${dollar.icon} **${player.money.toLocaleString()} ${dollar.name}**\n`;
 			count++;
 		}
 
@@ -29,7 +29,7 @@ module.exports = {
 			.setColor('GOLD')
 			.setTitle('📜 Bảng xếp hạng tài sản')
 			.setDescription(leaderboardMessage)
-			.addField('Tài sản của bạn', `${user.username}\`#${user.tag}\` = ${dollar.icon} **${user.money} ${dollar.name}**\n`)
+			.addField('Tài sản của bạn', `${user.username}\`#${user.tag}\` = ${dollar.icon} **${user.money.toLocaleString()} ${dollar.name}**\n`)
 			.setFooter('Bảng xếp hạng được cập nhật mỗi 10 phút');
 
 		message.channel.send(embed);
