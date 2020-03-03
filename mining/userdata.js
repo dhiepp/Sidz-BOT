@@ -154,7 +154,7 @@ module.exports = {
 
 		userCache.set(id, user);
 	},
-	async updateRank(author, rank, prestige) {
+	async updateRank(author, rank) {
 		const id = author.id;
 		let user = userCache.get(id);
 
@@ -164,10 +164,29 @@ module.exports = {
 		}
 
 		user.rank = rank;
+
+		try {
+			pool.query('UPDATE user SET rank = ? WHERE id = ?', [rank, id]);
+		}
+		catch (error) {
+			console.log(error);
+		}
+
+		userCache.set(id, user);
+	},
+	async updatePrestige(author, prestige) {
+		const id = author.id;
+		let user = userCache.get(id);
+
+		// If this user isnt cached yet
+		if (user === undefined) {
+			user = await this.getUser(author);
+		}
+
 		user.prestige = prestige;
 
 		try {
-			pool.query('UPDATE user SET rank = ?, prestige = ? WHERE id = ?', [rank, prestige, id]);
+			pool.query('UPDATE user SET prestige = ? WHERE id = ?', [prestige, id]);
 		}
 		catch (error) {
 			console.log(error);

@@ -15,23 +15,25 @@ module.exports = {
 
 		const currentRank = user.rank;
 		const currentPres = user.prestige;
-		let nextPres = currentPres;
-		let nextRank = String.fromCharCode(currentRank.charCodeAt() + 1);
-		if (currentRank === 'Z') {
-			nextRank = 'A';
-			nextPres++;
-		}
+		const nextRank = String.fromCharCode(currentRank.charCodeAt() + 1);
 		const price = Math.round(ranks[currentRank] * (currentPres * 0.2 + 0.8));
-		const sellMul = currentPres * 0.1 + 0.9;
+
+		let rankMessage = `Rank hiện tại: **${currentRank}${currentPres}**`
+			+ `\nRank tiếp theo: **${nextRank}${currentPres}**`
+			+ `\nYêu cầu: ${dollar.icon} **${price}** ${dollar.name}`;
+		let helpMessage = ['🔼 Lên rank', 'Dùng lệnh `s.rankup` để lên rank'];
+
+		if (currentRank === 'Z') {
+			rankMessage = `Rank hiện tại: **${currentRank}${currentPres}**`
+				+ '\nBạn đã đạt rank cao nhất!';
+			helpMessage = ['⏫ Lên cấp', 'Dùng lệnh `s.prestige` để lên cấp'];
+		}
 
 		const embed = new Discord.RichEmbed()
 			.setAuthor(`${message.author.username}`, message.author.avatarURL)
 			.setColor('BLUE')
-			.setDescription(`Rank hiện tại: **${currentRank}${currentPres}**`
-				+ `\nGiá bán đồ: **x${sellMul}**`
-				+ `\nRank tiếp theo: **${nextRank}${nextPres}**`
-				+ `\nYêu cầu: ${dollar.icon} **${price}** ${dollar.name}`)
-			.addField('Lên rank', 'Dùng lệnh `s.rankup` để lên rank')
+			.setDescription(rankMessage)
+			.addField(helpMessage[0], helpMessage[1])
 			.setFooter(footer);
 
 		message.channel.send(embed);
