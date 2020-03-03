@@ -94,7 +94,7 @@ module.exports = {
 		}
 
 		// Apply rank multiplier
-		earned *= user.prestige * 0.1 + 0.9;
+		earned = Math.round(earned * (user.prestige * 0.1 + 0.9));
 
 		userdata.updateMoney(message.author, user.money + earned);
 		inventorydata.updateItems(message.author.id, inv);

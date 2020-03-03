@@ -21,7 +21,7 @@ module.exports = {
 			nextRank = 'A';
 			nextPres++;
 		}
-		const price = ranks[currentRank] * (currentPres * 0.2 + 0.8);
+		const price = Math.round(ranks[currentRank] * (currentPres * 0.2 + 0.8));
 		const sellMul = currentPres * 0.1 + 0.9;
 
 		const embed = new Discord.RichEmbed()
