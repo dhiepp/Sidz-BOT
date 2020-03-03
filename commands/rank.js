@@ -18,13 +18,13 @@ module.exports = {
 		const nextRank = String.fromCharCode(currentRank.charCodeAt() + 1);
 		const price = Math.round(ranks[nextRank] * (currentPres * 0.2 + 0.8));
 
-		let rankMessage = `Rank hiện tại: **${currentRank}${currentPres}**`
-			+ `\nRank tiếp theo: **${nextRank}${currentPres}**`
+		let rankMessage = `Rank hiện tại: **${currentRank} ${currentPres}**`
+			+ `\nRank tiếp theo: **${nextRank} ${currentPres}**`
 			+ `\nYêu cầu: ${dollar.icon} **${price.toLocaleString()}** ${dollar.name}`;
 		let helpMessage = ['🔼 Lên rank', 'Dùng lệnh `s.rankup` để lên rank\nDùng lệnh `s.rankup max` để lên cấp cao nhất có thể'];
 
 		if (currentRank === 'Z') {
-			rankMessage = `Rank hiện tại: **${currentRank}${currentPres}**`
+			rankMessage = `Rank hiện tại: **${currentRank} ${currentPres}**`
 				+ '\nBạn đã đạt rank cao nhất!';
 			helpMessage = ['⏫ Lên cấp', 'Dùng lệnh `s.prestige` để lên cấp'];
 		}

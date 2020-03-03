@@ -96,7 +96,7 @@ async function prestigeUp(message, nextPres) {
 	const embed = new Discord.RichEmbed()
 		.setAuthor(`${message.author.username}`, message.author.avatarURL)
 		.setColor('GREEN')
-		.setTitle(`⏫ Bạn đã lên cấp! Rank hiện tại: **A${nextPres}**!`)
+		.setTitle(`⏫ Bạn đã lên cấp! Rank hiện tại: **A ${nextPres}**!`)
 		.setDescription(`🔓 Đã nâng cấp giá bán khoáng sản: **x${newMul}**!`)
 		.setFooter(footer);
 	message.channel.send(embed);
