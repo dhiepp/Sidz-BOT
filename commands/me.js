@@ -12,10 +12,9 @@ module.exports = {
 		// Get user data
 		const user = await userdata.getUser(message.author);
 
-
 		const embed = new Discord.RichEmbed()
 			.setAuthor(`Tài khoản của ${message.author.username}`, message.author.avatarURL)
-			.setColor('WHITE')
+			.setColor('BLUE')
 			.setDescription(`Rank: **${user.rank}${user.prestige}**`
 				+ `\nMultiplier: **x${user.prestige * 0.1 + 0.9}**`
 				+ `\nTài sản: ${dollar.icon} **${user.money} ${dollar.name}**`

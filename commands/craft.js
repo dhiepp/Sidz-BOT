@@ -14,7 +14,8 @@ module.exports = {
 	async execute(message, args) {
 		// Show craftable pickaxes
 		if (args.length == 0) {
-			let page = 0;
+			const user = await userdata.getUser(message.author);
+			let page = pickaxes[user.pick].id + 1;
 
 			let embed = getPickEmbed(page);
 			if (embed == null) return;
@@ -24,7 +25,7 @@ module.exports = {
 			await selection.react('➡️');
 
 			const reactionCollector = selection.createReactionCollector(
-				(reaction, user) => ['⬅️', '➡️'].includes(reaction.emoji.name) && user.id === message.author.id,
+				(reaction, reactor) => ['⬅️', '➡️'].includes(reaction.emoji.name) && reactor.id === message.author.id,
 				{ time: 60000 },
 			);
 
@@ -100,7 +101,7 @@ function getPickEmbed(page) {
 				.setDescription(`${pick.icon} **${pick.name}**\nĐộ bền: **${pick.durability}**\nNguyên liệu: ${material.icon} **x${amount}**`)
 				.addField('Khoáng sản đào được', mineableMessage)
 				.addField('⚠️ Lưu ý', 'Pickaxe cũ của bạn và tất cả enchants sẽ bị mất!'
-					+ `\nDùng lệnh \`s.craft ${pickName}\n\` để chế tạo`);
+					+ `\nDùng lệnh \`s.craft ${pickName}\` để chế tạo`);
 
 			pickEmbeds.push(embed);
 		}
