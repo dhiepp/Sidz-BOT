@@ -45,7 +45,8 @@ module.exports = {
 		default:
 			sql = 'SELECT username, tag, money FROM user ORDER BY money DESC LIMIT 10';
 		}
-		return await pool.query(sql);
+		const [leaderboard] = await pool.query(sql);
+		return leaderboard;
 	},
 	async mining(author, xp, durability, blocks) {
 		const id = author.id;
