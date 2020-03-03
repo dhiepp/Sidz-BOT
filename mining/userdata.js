@@ -76,6 +76,7 @@ module.exports = {
 		}
 
 		user.xp = xp;
+
 		try {
 			pool.query('UPDATE user SET xp = ? WHERE id = ?', [xp, id]);
 		}
@@ -146,6 +147,27 @@ module.exports = {
 
 		try {
 			pool.query('UPDATE user SET pickaxe = ?, durability = ?' + reset + ' WHERE id = ?', [pickName, durability, id]);
+		}
+		catch (error) {
+			console.log(error);
+		}
+
+		userCache.set(id, user);
+	},
+	async updateRank(author, rank, prestige) {
+		const id = author.id;
+		let user = userCache.get(id);
+
+		// If this user isnt cached yet
+		if (user === undefined) {
+			user = await this.getUser(author);
+		}
+
+		user.rank = rank;
+		user.prestige = prestige;
+
+		try {
+			pool.query('UPDATE user SET rank = ?, prestige = ? WHERE id = ?', [rank, prestige, id]);
 		}
 		catch (error) {
 			console.log(error);
