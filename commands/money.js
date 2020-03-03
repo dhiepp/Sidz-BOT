@@ -16,7 +16,7 @@ module.exports = {
 		const embed = new Discord.RichEmbed()
 			.setAuthor(`Tài sản của ${message.author.username}`, message.author.avatarURL)
 			.setColor('BLUE')
-			.setDescription(`${dollar.icon} **${user.money}** ${dollar.name}`)
+			.setDescription(`${dollar.icon} **${user.money.toLocaleString()}** ${dollar.name}`)
 			.setFooter(footer);
 
 		message.channel.send(embed);
