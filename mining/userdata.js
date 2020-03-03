@@ -33,6 +33,27 @@ module.exports = {
 
 		return user;
 	},
+	async updateUser(author) {
+		const id = author.id;
+		let user = userCache.get(id);
+
+		// If this user isnt cached yet
+		if (user === undefined) {
+			user = await this.getUser(author);
+		}
+
+		user.username = author.username;
+		user.tag = author.discriminator;
+
+		try {
+			pool.query('UPDATE user SET username = ?, tag = ? WHERE id = ?', [author.username, author.discriminator, id]);
+		}
+		catch (error) {
+			console.log(error);
+		}
+
+		userCache.set(id, user);
+	},
 	async getTop(type) {
 		let sql = '';
 		switch (type) {
