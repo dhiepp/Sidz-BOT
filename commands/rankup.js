@@ -35,7 +35,10 @@ module.exports = {
 			let maxRank = nextRank;
 			price = 0;
 			for (const rank in ranks) {
+				if (rank <= currentRank || rank === 'Z') continue;
 				const rup = ranks[rank];
+
+				console.log('rank ' + rank + ' | price ' + rup);
 				if (rup < balance) {
 					balance -= rup;
 					price += rup;
