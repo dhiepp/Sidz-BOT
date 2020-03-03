@@ -2,7 +2,7 @@ const { footer } = require('../config.json');
 const Discord = require('discord.js');
 const ranks = require('../mining/ranks.json');
 const userdata = require('../mining/userdata.js');
-const { dollar } = require('../mining/currency.json');
+const { dollar, experience } = require('../mining/currency.json');
 
 module.exports = {
 	name: 'prestige',
@@ -29,7 +29,7 @@ module.exports = {
 			return;
 		}
 
-		const newMul = Math.round(nextPres * 0.1 + 0.9);
+		const newMul = nextPres * 0.1 + 0.9;
 
 		const embed = new Discord.RichEmbed()
 			.setAuthor(`${message.author.username}`, message.author.avatarURL)
@@ -38,7 +38,7 @@ module.exports = {
 			.setDescription(`Cấp độ tiếp theo: **${nextPres}**\nGiá bán khoáng sản: **${newMul}**`
 				+ `\nYêu cầu: ${dollar.icon} **${price}** ${dollar.name}`)
 			.addField('⚠️ Lưu ý', 'Sau khi lên cấp những thứ sau sẽ được reset:'
-				+ '\n- ${dollar.icon} **${dollar.name}** và ${experience.icon} **${experience.name}**\n**- Rương đồ và Pickaxe của bạn**')
+				+ `\n- ${dollar.icon} **${dollar.name}** và ${experience.icon} **${experience.name}**\n**- Rương đồ và Pickaxe của bạn**`)
 			.addField('Xác nhận', 'React với ✅ để xác nhận lên cấp')
 			.setFooter('Yêu cầu này sẽ hết hạn sau 10 giây');
 
