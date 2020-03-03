@@ -37,7 +37,7 @@ module.exports = {
 			.setColor('BLUE')
 			.setTitle('⏫ Bạn có muốn lên cấp tiếp theo không?')
 			.setDescription(`Cấp độ tiếp theo: **${nextPres}**\nGiá bán khoáng sản: **${newMul}**`
-				+ `\nYêu cầu: ${dollar.icon.toLocaleString()} **${price}** ${dollar.name}`)
+				+ `\nYêu cầu: ${dollar.icon} **${price.toLocaleString()}** ${dollar.name}`)
 			.addField('⚠️ Lưu ý', 'Sau khi lên cấp những thứ sau sẽ được reset:'
 				+ `\n- ${dollar.icon} **${dollar.name}** và ${experience.icon} **${experience.name}**\n- Rương đồ và Pickaxe của bạn`)
 			.addField('Xác nhận', 'React với ✅ để xác nhận lên cấp')
@@ -84,7 +84,7 @@ async function prestigeUp(message, nextPres) {
 		await userdata.updateMoney(message.author, 0);
 		await userdata.updateXP(message.author, 0);
 		await userdata.updatePickaxe(message.author, 'none', 0, true);
-		await inventorydata.updateItems(inv);
+		await inventorydata.updateItems(message.author.id, inv);
 	}
 	catch(error) {
 		message.channel.send(`🚫 **${message.author.username}**, đã có lỗi xảy ra khi thực hiện yêu cầu của bạn!`);
