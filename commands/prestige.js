@@ -2,6 +2,7 @@ const { footer } = require('../config.json');
 const Discord = require('discord.js');
 const ranks = require('../mining/ranks.json');
 const userdata = require('../mining/userdata.js');
+const inventorydata = require('../mining/inventorydata.js');
 const { dollar, experience } = require('../mining/currency.json');
 
 module.exports = {
@@ -72,12 +73,18 @@ module.exports = {
 };
 
 async function prestigeUp(message, nextPres) {
+	// Reset inv
+	const inv = await inventorydata.getInv(message.author.id);
+	for (const resource in inv) {
+		inv[resource] = 0;
+	}
 	try {
 		await userdata.updatePrestige(message.author, nextPres);
 		await userdata.updateRank(message.author, 'A');
 		await userdata.updateMoney(message.author, 0);
 		await userdata.updateXP(message.author, 0);
 		await userdata.updatePickaxe(message.author, 'none', 0, true);
+		await inventorydata.updateItems(inv);
 	}
 	catch(error) {
 		message.channel.send(`🚫 **${message.author.username}**, đã có lỗi xảy ra khi thực hiện yêu cầu của bạn!`);
