@@ -36,9 +36,8 @@ module.exports = {
 			price = 0;
 			for (const rank in ranks) {
 				if (rank <= currentRank || rank === 'Z') continue;
-				const rup = ranks[rank];
+				const rup = Math.round(ranks[rank] * (currentPres * 0.2 + 0.8));
 
-				console.log('rank ' + rank + ' | price ' + rup);
 				if (rup < balance) {
 					balance -= rup;
 					price += rup;
@@ -47,10 +46,6 @@ module.exports = {
 				else {
 					break;
 				}
-			}
-			if (price <= 0) {
-				message.channel.send(`🚫 **${message.author.username}**! Bạn không đủ tiền để lên rank nào nữa!`);
-				return;
 			}
 			nextRank = maxRank;
 		}
