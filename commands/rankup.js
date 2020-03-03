@@ -35,7 +35,7 @@ module.exports = {
 			let maxRank = nextRank;
 			price = 0;
 			for (const rank in ranks) {
-				if (rank <= currentRank || rank === 'Z') continue;
+				if (rank <= currentRank) continue;
 				const rup = Math.round(ranks[rank] * (currentPres * 0.2 + 0.8));
 
 				if (rup < balance) {
