@@ -30,13 +30,12 @@ module.exports = {
 				.setTitle(`🤖 Các câu lệnh của **${bot_name}**`)
 				.addField('⛏️ Trợ giúp chức năng đào khoáng sản `(1/2)`',
 					'Để đi mine hãy dùng lệnh `s.mine`'
-					+ '\nĐể chế tạo cúp: `s.craft`'
-					+ '\nĐể phù phép cúp: `s.enchant`'
-					+ '\nĐể sửa chữa cúp: `s.fix`'
-					+ '\nĐể xem rương đồ: `s.inventory`'
-					+ '\nĐể bán khoáng sản: `s.sell`'
-					+ '\nĐể xem tài sản: `s.money`'
-					+ '\nĐể xem bảng xếp hạng: `s.top`')
+					+ '\nChế tạo cúp: `s.craft`'
+					+ '\nPhù phép cúp: `s.enchant`'
+					+ '\nSửa chữa cúp: `s.fix`'
+					+ '\nXem rương đồ: `s.inventory`'
+					+ '\nBán khoáng sản: `s.sell`'
+					+ '\nXem tài sản: `s.money`')
 				.addField('🔍 Trợ giúp chi tiết', `Sử dụng lệnh \`${prefix}help [command]\` để xem thông tin về lệnh nào đó!`);
 			helpPages.push(embed2);
 
@@ -45,9 +44,11 @@ module.exports = {
 				.setColor('AQUA')
 				.setTitle(`🤖 Các câu lệnh của **${bot_name}**`)
 				.addField('⛏️ Trợ giúp chức năng đào khoáng sản `(2/2)`',
-					'\nĐể xem rank: `s.rank`'
-					+ '\nĐể lên rank: `s.rankup`'
-					+ '\nĐể lên cấp: `s.prestige`')
+					'\nXem rank hiện tại: `s.rank`'
+					+ '\nLên rank tiếp theo: `s.rankup`'
+					+ '\nLên cấp tiếp theo: `s.prestige`'
+					+ '\nXem thông tin cá nhận: `s.me`'
+					+ '\nXem bảng xếp hạng: `s.top`')
 				.addField('🔍 Trợ giúp chi tiết', `Sử dụng lệnh \`${prefix}help [command]\` để xem thông tin về lệnh nào đó!`);
 			helpPages.push(embed3);
 

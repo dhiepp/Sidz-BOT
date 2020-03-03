@@ -27,7 +27,7 @@ module.exports = {
 
 		const embed = new Discord.RichEmbed()
 			.setAuthor(`${message.author.username}`, message.author.avatarURL)
-			.setColor('BLUE')
+			.setColor('RED')
 			.setTitle('⏫ Bạn có muốn lên cấp tiếp theo không?')
 			.setDescription(`Cấp độ tiếp theo: **${nextPres}**\nGiá bán khoáng sản: **x${newMul}**`)
 			.addField('⚠️ Lưu ý', 'Sau khi lên cấp những thứ sau sẽ được reset:'
