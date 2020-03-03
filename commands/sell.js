@@ -96,7 +96,7 @@ module.exports = {
 		// Apply rank multiplier
 		const mul = user.prestige * 0.1 + 0.9;
 		earned = Math.round(earned * mul);
-		const mulStr = mul > 1 ? `(x${mul})` : '';
+		const mulStr = mul > 1 ? ` \`(x${mul})\`` : '';
 
 		userdata.updateMoney(message.author, user.money + earned);
 		inventorydata.updateItems(message.author.id, inv);
@@ -105,7 +105,7 @@ module.exports = {
 			.setAuthor(`${message.author.username} đã bán khoáng sản!`, message.author.avatarURL)
 			.setColor('GREEN')
 			.addField('Resources Sold', soldMessage)
-			.addField('Money Earned', `${dollar.icon} **+${earned}** ${dollar.name} \`${mulStr}\``)
+			.addField('Money Earned', `${dollar.icon} **+${earned}** ${dollar.name}${mulStr}`)
 			.setFooter(footer);
 
 		message.channel.send(embed);
