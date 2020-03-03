@@ -52,7 +52,7 @@ module.exports = {
 };
 
 async function getTop(message, type) {
-	const embed = topCache.get(type);
+	let embed = topCache.get(type);
 
 	// This top type is cached
 	if (embed !== undefined) {
@@ -95,10 +95,13 @@ async function getTop(message, type) {
 		your = `${user.username}\`#${user.tag}\` = ${dollar.icon} **${user.money.toLocaleString()} ${dollar.name}**\n`;
 	}
 
-	return new Discord.RichEmbed()
+	embed = new Discord.RichEmbed()
 		.setColor('GOLD')
 		.setTitle(`📜 Bảng xếp hạng ${typeNames[type]}`)
 		.setDescription(leaderboardMessage)
 		.addField(`${typeNames[type]} của bạn`, your)
 		.setTimestamp(new Date());
+
+	topCache.set(type, embed);
+	return embed;
 }
