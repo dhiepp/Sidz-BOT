@@ -15,7 +15,7 @@ module.exports = {
 		// Show craftable pickaxes
 		if (args.length == 0) {
 			const user = await userdata.getUser(message.author);
-			let page = pickaxes[user.pickaxe].id + 1;
+			let page = pickaxes[user.pickaxe].id;
 
 			let embed = getPickEmbed(page);
 			if (embed == null) return;
