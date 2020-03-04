@@ -7,7 +7,7 @@ module.exports = {
 	name: 'inventory',
 	description: 'Check your inventory',
 	aliases: ['inv'],
-	cooldown: 3,
+	cooldown: 10,
 	async execute(message) {
 
 		// Get inv data

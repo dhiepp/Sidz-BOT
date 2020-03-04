@@ -30,7 +30,7 @@ module.exports = {
 
 		// Show enchantments
 		if (args.length == 0) {
-			const pickMessage = `${pick.icon} **${pick.name}** \`[${user.durability}/${pick.durability}]\``
+			const pickMessage = `${pick.icon} **${pick.name}** \`(${user.durability}/${pick.durability})\``
 				+ '\nDùng lệnh `s.enchant [enchantment] [level]` để phù phép'
 				+ `\nBạn đang có ${experience.icon} **${user.xp}** ${experience.name}`;
 

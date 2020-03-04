@@ -12,7 +12,7 @@ module.exports = {
 	description: 'Fix pickaxe',
 	aliases: ['repair', 'mend'],
 	usage: '[yes]',
-	cooldown: 5,
+	cooldown: 3,
 	async execute(message, args) {
 		// Get user data
 		const user = await userdata.getUser(message.author);
@@ -89,7 +89,7 @@ module.exports = {
 
 		// Show fix prices
 
-		let pickMessage = `${pick.icon} **${pick.name}** \`[${user.durability}/${pick.durability}]\``;
+		let pickMessage = `${pick.icon} **${pick.name}** \`(${user.durability}/${pick.durability})\``;
 		for (const enchantName in enchants) {
 			const enchant = enchants[enchantName];
 			const level = user[enchantName];

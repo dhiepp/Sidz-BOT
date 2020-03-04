@@ -72,7 +72,7 @@ async function getTop(message, type) {
 		const player = leaderboard[pos];
 		switch (type) {
 		case 'rank':
-			leaderboardMessage += `${numbers[count]} ${player.username}\`#${player.tag}\` : **${player.rank} ${player.prestige}**\n`;
+			leaderboardMessage += `${numbers[count]} ${player.username}\`#${player.tag}\` : [**${player.rank} ${player.prestige}**]\n`;
 			break;
 		case 'blocks':
 			leaderboardMessage += `${numbers[count]} ${player.username}\`#${player.tag}\` : **${player.blocks}** blocks\n`;
@@ -86,7 +86,7 @@ async function getTop(message, type) {
 	let your = '';
 	switch (type) {
 	case 'rank':
-		your = `${user.username}\`#${user.tag}\` : **${user.rank} ${user.prestige}**\n`;
+		your = `${user.username}\`#${user.tag}\` : [**${user.rank} ${user.prestige}**]\n`;
 		break;
 	case 'blocks':
 		your = `${user.username}\`#${user.tag}\` : **${user.blocks}** blocks\n`;

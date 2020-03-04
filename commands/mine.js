@@ -10,7 +10,7 @@ const inventorydata = require('../mining/inventorydata.js');
 module.exports = {
 	name: 'mine',
 	description: 'Go mining...',
-	cooldown: 5,
+	cooldown: 10,
 	async execute(message) {
 
 		// Get user data
@@ -87,7 +87,7 @@ module.exports = {
 
 		const embed = new Discord.RichEmbed()
 			.setAuthor(`${message.author.username} đã đi mine!`, message.author.avatarURL)
-			.setTitle(`${pick.icon} ${pick.name} \`[${user.durability}/${pick.durability}]\``)
+			.setTitle(`${pick.icon} ${pick.name} \`(${user.durability}/${pick.durability})\``)
 			.setColor('GREEN')
 			.setDescription(enchantMessage)
 			.addField('Mined Resources', minedMessage)

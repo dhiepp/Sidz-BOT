@@ -7,7 +7,7 @@ module.exports = {
 	name: 'me',
 	description: 'Check your profile',
 	aliases: ['profile', 'my'],
-	cooldown: 3,
+	cooldown: 10,
 	async execute(message) {
 		// Get user data
 		const user = await userdata.getUser(message.author);
@@ -15,7 +15,7 @@ module.exports = {
 		const embed = new Discord.RichEmbed()
 			.setAuthor(`Tài khoản của ${message.author.username}`, message.author.avatarURL)
 			.setColor('BLUE')
-			.setDescription(`Rank: **${user.rank} ${user.prestige}**`
+			.setDescription(`Rank: [**${user.rank} ${user.prestige}**]`
 				+ `\nMultiplier: **x${(user.prestige * 0.1 + 0.9).toFixed(1)}**`
 				+ `\nTài sản: ${dollar.icon} **${user.money.toLocaleString()} ${dollar.name}**`
 				+ `\nKinh nghiệm: ${experience.icon} **${user.xp}**`
