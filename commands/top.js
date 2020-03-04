@@ -83,23 +83,10 @@ async function getTop(message, type) {
 		count++;
 	}
 
-	let your = '';
-	switch (type) {
-	case 'rank':
-		your = `${user.username}\`#${user.tag}\` : [**${user.rank} ${user.prestige}**]\n`;
-		break;
-	case 'blocks':
-		your = `${user.username}\`#${user.tag}\` : **${user.blocks}** blocks\n`;
-		break;
-	default:
-		your = `${user.username}\`#${user.tag}\` = ${dollar.icon} **${user.money.toLocaleString()} ${dollar.name}**\n`;
-	}
-
 	embed = new Discord.RichEmbed()
 		.setColor('GOLD')
 		.setTitle(`📜 Bảng xếp hạng ${typeNames[type]}`)
 		.setDescription(leaderboardMessage)
-		.addField(`${typeNames[type]} của bạn`, your)
 		.setTimestamp(new Date());
 
 	topCache.set(type, embed);

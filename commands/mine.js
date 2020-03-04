@@ -10,7 +10,7 @@ const inventorydata = require('../mining/inventorydata.js');
 module.exports = {
 	name: 'mine',
 	description: 'Go mining...',
-	cooldown: 10,
+	cooldown: 5,
 	async execute(message) {
 
 		// Get user data

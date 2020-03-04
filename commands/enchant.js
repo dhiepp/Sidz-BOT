@@ -61,7 +61,7 @@ module.exports = {
 
 		// Enchanting
 		if (args.length >= 1) {
-			const enchantName = args[0];
+			const enchantName = args[0].toLowerCase();
 			const enchant = enchants[enchantName];
 
 			// Invalid pickaxe

@@ -28,7 +28,8 @@ client.on('message', async message => {
 		privateDM.log(message);
 	}
 
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	const pre = message.content.toLowerCase();
+	if (!pre.startsWith(prefix) || message.author.bot) return;
 
 	// Check text channel
 	if (message.channel.type !== 'text') {

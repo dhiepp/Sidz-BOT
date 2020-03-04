@@ -53,7 +53,7 @@ module.exports = {
 
 		// Crafting
 		if (args.length >= 1) {
-			const pickName = args[0];
+			const pickName = args[0].toLowerCase();
 			const pick = pickaxes[pickName];
 
 			// Invalid pickaxe
