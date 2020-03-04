@@ -15,9 +15,9 @@ module.exports = {
 		const version = process.env.npm_package_version;
 		const uptime = process.uptime();
 		const days = Math.floor(uptime / 86400);
-		const hours = Math.floor((uptime % 86400) / 3600).toString.padStart(2, '0');
-		const minutes = Math.floor((uptime % 3600) / 60).toString.padStart(2, '0');
-		const seconds = Math.floor(uptime % 60).toString.padStart(2, '0');
+		const hours = Math.floor((uptime % 86400) / 3600).toString().padStart(2, '0');
+		const minutes = Math.floor((uptime % 3600) / 60).toString().padStart(2, '0');
+		const seconds = Math.floor(uptime % 60).toString().padStart(2, '0');
 		const upString = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
 		const embed = new Discord.RichEmbed()
