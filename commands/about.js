@@ -21,7 +21,7 @@ module.exports = {
 		const upString = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
 		const embed = new Discord.RichEmbed()
-			.setAuthor(`${config.bot.name} v${version}`, client.user.avatarURL)
+			.setAuthor(`${config.bot_name} v${version}`, client.user.avatarURL)
 			.setColor('AQUA')
 			.setTitle('Made by **Sidz**`#0242`')
 			.setDescription(`Prefix: \`${config.prefix}\`` + '\nCommands: `s.help`'
