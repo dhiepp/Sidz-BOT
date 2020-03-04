@@ -1,7 +1,8 @@
 {
-	"bot_name": "Sidz BOT",
+	"bot_name": "Sidz Bot",
 	"prefix": "s.",
 	"footer": "BETA: in development",
 	"token": "",
+	"invite_link": "https://discordapp.com/oauth2/authorize?client_id=678640505541623817&permissions=388168&scope=bot",
 	"developer_user_id": "270506013822681088"
 }

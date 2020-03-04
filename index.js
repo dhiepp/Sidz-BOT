@@ -20,11 +20,6 @@ client.once('ready', () => {
 	// for (const guild of client.guilds) {
 	// 	console.log(guild[1].name);
 	// }
-	// for (const user of client.users) {
-	// 	if (user[0] === '270506013822681088') {
-	// 		user[1].send('hi');
-	// 	}
-	// }
 });
 
 client.on('message', async message => {
@@ -78,11 +73,7 @@ client.on('message', async message => {
 
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
-	let cooldownAmount = (command.cooldown || 2) * 1000;
-	// Skip CD for Test guild
-	if (message.guild.id === '680395302095683594') {
-		cooldownAmount = 0;
-	}
+	const cooldownAmount = (command.cooldown || 2) * 1000;
 
 	if (timestamps.has(message.author.id)) {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
@@ -108,3 +99,7 @@ client.on('message', async message => {
 });
 
 client.login(token);
+
+// Set about command avatar
+const about = require('./commands/about.js');
+about.setClient(client);
