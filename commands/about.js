@@ -1,16 +1,12 @@
 const Discord = require('discord.js');
-const config = require ('../config.json');
-
-let client;
+const config = require('../config.json');
+const { client } = require('../index.js');
 
 module.exports = {
 	name: 'about',
 	description: 'Show bot information',
 	aliases: ['bot', 'sidz'],
 	cooldown: 10,
-	setClient(cl) {
-		this.client = cl;
-	},
 	execute(message) {
 		const version = process.env.npm_package_version;
 		const uptime = process.uptime();

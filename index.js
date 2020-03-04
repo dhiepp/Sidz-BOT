@@ -100,6 +100,4 @@ client.on('message', async message => {
 
 client.login(token);
 
-// Set about command avatar
-const about = require('./commands/about.js');
-about.setClient(client);
+module.exports.client = client;
