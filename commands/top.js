@@ -89,6 +89,6 @@ async function getTop(message, type) {
 		.setDescription(leaderboardMessage)
 		.setTimestamp(new Date());
 
-	topCache.set(type, embed);
+	topCache.set(type, embed, 600);
 	return embed;
 }
