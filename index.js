@@ -2,8 +2,9 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const privateDM = require('./privateDM.js');
+const admin = require('./admin.js');
 
-const { prefix, token } = require('./config.json');
+const { prefix, token, developer_user_id } = require('./config.json');
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -17,14 +18,14 @@ const cooldowns = new Discord.Collection();
 client.once('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 	client.user.setActivity(`s.help (${client.guilds.size} servers)`, { type: 'PLAYING' });
-	// for (const guild of client.guilds) {
-	// 	console.log(guild[1].name);
-	// }
 });
 
 client.on('message', async message => {
 	// Private DM
 	if (message.channel.type === 'dm' | 'group' && !message.author.bot) {
+		if (message.author.id === developer_user_id) {
+			admin.command(message, client);
+		}
 		privateDM.log(message);
 	}
 
