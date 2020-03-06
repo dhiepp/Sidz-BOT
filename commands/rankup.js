@@ -18,7 +18,7 @@ module.exports = {
 		const currentRank = user.rank;
 		const currentPres = user.prestige;
 		let nextRank = String.fromCharCode(currentRank.charCodeAt() + 1);
-		let price = Math.round(ranks[nextRank] * (currentPres * 0.2 + 0.8));
+		let price = ranks[nextRank];
 
 		if (currentRank === 'Z') {
 			message.channel.send(`🚫 **${message.author.username}**! Bạn đã đạt rank cao nhất rồi, hãy dùng lệnh \`s.prestige\` để lên cấp!`);
@@ -36,7 +36,7 @@ module.exports = {
 			price = 0;
 			for (const rank in ranks) {
 				if (rank <= currentRank) continue;
-				const rup = Math.round(ranks[rank] * (currentPres * 0.2 + 0.8));
+				const rup = ranks[nextRank];
 
 				if (rup < balance) {
 					balance -= rup;

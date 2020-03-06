@@ -16,7 +16,7 @@ module.exports = {
 		const currentRank = user.rank;
 		const currentPres = user.prestige;
 		const nextRank = String.fromCharCode(currentRank.charCodeAt() + 1);
-		const price = Math.round(ranks[nextRank] * (currentPres * 0.2 + 0.8));
+		const price = ranks[nextRank];
 
 		let rankMessage = `Rank hiện tại: [**${currentRank} ${currentPres}**]`
 			+ `\nRank tiếp theo: [**${nextRank} ${currentPres}**]`
