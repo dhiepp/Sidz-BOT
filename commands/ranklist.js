@@ -13,9 +13,6 @@ module.exports = {
 		// Get user data
 		const user = await userdata.getUser(message.author);
 
-		// Get user dât
-		const user = userdata.getUser(message.author);
-
 		const currentRank = user.rank;
 		let ranksMessage = '';
 
