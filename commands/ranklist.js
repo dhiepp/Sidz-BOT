@@ -10,16 +10,13 @@ module.exports = {
 	aliases: ['ranks', 'rl'],
 	cooldown: 3,
 	async execute(message) {
-<<<<<<< HEAD
 		// Get user data
 		const user = await userdata.getUser(message.author);
 
-=======
 		// Get user dât
 		const user = userdata.getUser(message.author);
 
 		const currentRank = user.rank;
->>>>>>> aa3ccbbbb77439de5faca89f226a67b93123a88e
 		let ranksMessage = '';
 
 		for (const rank in ranks) {
