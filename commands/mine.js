@@ -6,12 +6,16 @@ const enchants = require('../mining/enchants.json');
 const { experience } = require('../mining/currency.json');
 const userdata = require('../mining/userdata.js');
 const inventorydata = require('../mining/inventorydata.js');
+const NodeCache = require('node-cache');
 
 module.exports = {
 	name: 'mine',
 	description: 'Go mining...',
 	cooldown: 5,
 	async execute(message) {
+		// Cheat detection
+		const name = message.author.username;
+		if (cheatDetect(name)) return message.channel.send(`**${name}**! Bạn chưa thể đi mine lúc này!`);
 
 		// Get user data
 		const user = await userdata.getUser(message.author);
@@ -97,3 +101,33 @@ module.exports = {
 		message.channel.send(embed);
 	},
 };
+
+const protection = new NodeCache();
+
+function cheatDetect(name) {
+	let blocked = false;
+	let data = protection.get(name);
+	if (data === undefined) {
+		data = {};
+		data.lastPeriod = 0;
+		data.vl = 0;
+	}
+	else {
+		const period = Date.now() - data.lastMined;
+
+		// Perform protection
+		if (period <= (this.cooldown + data.vl / 2) * 1000) {
+			console.log('BLOCKED ' + name);
+			blocked = true;
+		}
+
+		// The time that fluctuate between action periods (ms)
+		const dif = Math.abs(data.lastPeriod - period);
+		if (dif < 100) data.vl++;
+
+		data.lastPeriod = period;
+	}
+	data.lastMined = Date.now();
+	protection.set(name, data, 600);
+	return blocked;
+}

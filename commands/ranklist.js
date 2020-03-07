@@ -12,6 +12,7 @@ module.exports = {
 	async execute(message) {
 		// Get user dât
 		const user = userdata.getUser(message.author);
+
 		const currentRank = user.rank;
 		let ranksMessage = '';
 
