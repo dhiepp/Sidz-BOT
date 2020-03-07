@@ -15,7 +15,7 @@ module.exports = {
 		const currentRank = user.rank;
 		let ranksMessage = '';
 
-		for (const rank of ranks) {
+		for (const rank in ranks) {
 			ranksMessage += `\n**${rank}**: ${dollar.icon} ${ranks[rank]}`;
 			if (rank === currentRank) {
 				ranksMessage += ' (Rank của bạn)';
