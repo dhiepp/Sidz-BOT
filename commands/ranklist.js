@@ -10,15 +10,15 @@ module.exports = {
 	aliases: ['ranks', 'rl'],
 	cooldown: 3,
 	async execute(message) {
-		// Get user dât
-		const user = userdata.getUser(message.author);
-		const currentRank = user.rank;
+		// Get user data
+		const user = await userdata.getUser(message.author);
+
 		let ranksMessage = '';
 
 		for (const rank in ranks) {
 			ranksMessage += `\n**${rank}**: ${dollar.icon} ${ranks[rank]}`;
-			if (rank === currentRank) {
-				ranksMessage += ' (Rank của bạn)';
+			if (rank === user.rank) {
+				ranksMessage += ' (Bạn ở đây)';
 			}
 		}
 
