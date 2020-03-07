@@ -21,21 +21,24 @@ client.once('ready', () => {
 });
 
 client.on('message', async message => {
+	if (message.author.bot) return;
+	
 	// Private DM
 	if (message.channel.type === 'dm' | 'group' && !message.author.bot) {
 		if (message.author.id === developer_user_id) {
 			admin.command(message, client);
+			return;
 		}
 		privateDM.log(message);
 	}
 
-	const pre = message.content.toLowerCase();
-	if (!pre.startsWith(prefix) || message.author.bot) return;
-
 	// Check text channel
 	if (message.channel.type !== 'text') {
-		return message.channel.send('Bạn không thể sử dụng lệnh tại đây!');
+		return message.channel.send('Bạn không thể sử dụng bot tại đây!');
 	}
+
+	const pre = message.content.toLowerCase();
+	if (!pre.startsWith(prefix)) return;
 
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const commandName = args.shift().toLowerCase();
