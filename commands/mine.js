@@ -8,10 +8,12 @@ const userdata = require('../mining/userdata.js');
 const inventorydata = require('../mining/inventorydata.js');
 const NodeCache = require('node-cache');
 
+const dynamicCD = 5;
+
 module.exports = {
 	name: 'mine',
 	description: 'Go mining...',
-	cooldown: 5,
+	cooldown: dynamicCD,
 	async execute(message) {
 		// Cheat detection
 		const name = message.author.username;
@@ -116,7 +118,7 @@ function cheatDetect(name) {
 		const period = Date.now() - data.lastMined;
 
 		// Perform protection
-		if (period <= (this.cooldown + data.vl / 2) * 1000) {
+		if (period <= ((dynamicCD + data.vl / 4) * 1000)) {
 			console.log('BLOCKED ' + name);
 			blocked = true;
 		}
@@ -126,6 +128,7 @@ function cheatDetect(name) {
 		if (dif < 100) data.vl++;
 
 		data.lastPeriod = period;
+		console.log(`${name}: ${period} => ${dif} (${data.vl})`)
 	}
 	data.lastMined = Date.now();
 	protection.set(name, data, 600);
