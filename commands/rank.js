@@ -18,15 +18,19 @@ module.exports = {
 		const nextRank = String.fromCharCode(currentRank.charCodeAt() + 1);
 		const price = ranks[nextRank];
 
-		let rankMessage = `Rank hiện tại: [**${currentRank} ${currentPres}**]`
-			+ `\nRank tiếp theo: [**${nextRank} ${currentPres}**]`
-			+ `\nYêu cầu: ${dollar.icon} **${price.toLocaleString()}** ${dollar.name}`;
-		let helpMessage = ['🔼 Lên rank', 'Dùng lệnh `s.rankup` để lên rank\nDùng lệnh `s.rankup max` để lên cấp cao nhất có thể'];
+		let rankMessage = '';
+		let helpMessage = '';
 
 		if (currentRank === 'Z') {
 			rankMessage = `Rank hiện tại: [**${currentRank} ${currentPres}**]`
 				+ '\nBạn đã đạt rank cao nhất!';
 			helpMessage = ['⏫ Lên cấp', 'Dùng lệnh `s.prestige` để lên cấp'];
+		}
+		else {
+			rankMessage = `Rank hiện tại: [**${currentRank} ${currentPres}**]`
+				+ `\nRank tiếp theo: [**${nextRank} ${currentPres}**]`
+				+ `\nYêu cầu: ${dollar.icon} **${price.toLocaleString()}** ${dollar.name}`;
+			helpMessage = ['🔼 Lên rank', 'Dùng lệnh `s.rankup` để lên rank\nDùng lệnh `s.rankup max` để lên cấp cao nhất có thể'];
 		}
 
 		const embed = new Discord.RichEmbed()

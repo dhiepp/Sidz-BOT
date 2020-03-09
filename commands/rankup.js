@@ -36,7 +36,7 @@ module.exports = {
 			price = 0;
 			for (const rank in ranks) {
 				if (rank <= currentRank) continue;
-				const rup = ranks[nextRank];
+				const rup = ranks[rank];
 
 				if (rup < balance) {
 					balance -= rup;
