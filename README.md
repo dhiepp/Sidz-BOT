@@ -1,7 +1,13 @@
 # Sidz-BOT
-A discord bot: mining game
+**Discord bot để chơi game đào mỏ, bán khoảng sản và đua top!**
 
-# Cách chơi
+## Hình ảnh
+<img src="images/crafting.png" width="400">
+<img src="images/enchanting.png" width="400">
+<img src="images/inventory.png" width="400">
+<img src="images/prestige.png" width="400">
+
+## Cách chơi
 * Đầu tiên, bạn hãy đào tài nguyên bằng lệnh **s.mine**
 * Sau khi có đủ nguyên liệu, bạn có thể chế tạo pickaxe mới bằng lệnh **s.craft**
 * Để nâng cấp cho pickaxe của bạn, hãy phù phép bằng lệnh **s.enchant**
@@ -16,7 +22,7 @@ A discord bot: mining game
 * Để biết thêm về tất cả các câu lệnh, cũng như những chức năng khác, hãy dùng lệnh **s.help**
 
 
-# Cách tự host Sidz Bot
+## Cách tự host Sidz Bot
 * Cài NodeJS, tải Sidz Bot và chạy `npm install` để cài các dependency
 * Tạo Bot Discord và lấy token
 * Config token đã lấy và các thông tin khác trong [config.json](config.json)
