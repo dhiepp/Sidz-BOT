@@ -95,7 +95,7 @@ client.on('message', async message => {
 
 	// Execute command
 	try {
-		(command.execute(message, args, client.users.get('409147620687347712')));
+		(command.execute(message, args));
 	}
 	catch (error) {
 		console.error(error);
