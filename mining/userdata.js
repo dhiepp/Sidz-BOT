@@ -18,7 +18,7 @@ module.exports = {
 			try {
 				const [results] = await pool.query('SELECT * FROM user WHERE id = ?', [id]);
 				user = results[0];
-				
+
 				// If this user isnt in record
 				if (user === undefined) {
 					user = await this.addUser(id, author.username, author.discriminator);

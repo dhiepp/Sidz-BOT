@@ -22,7 +22,7 @@ client.once('ready', () => {
 
 client.on('message', async message => {
 	if (message.author.bot) return;
-	
+
 	// Private DM
 	if (message.channel.type === 'dm' | 'group' && !message.author.bot) {
 		if (message.author.id === developer_user_id) {

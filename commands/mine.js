@@ -117,20 +117,23 @@ function cheatDetect(name) {
 	else {
 		const period = Date.now() - data.lastMined;
 
-		// Perform protection
+		// Perform protection. Every violation add 1/4 seconds to the cooldown
 		if (period <= ((dynamicCD + data.vl / 4) * 1000)) {
-			console.log('BLOCKED ' + name);
+			// console.log('BLOCKED ' + name);
 			blocked = true;
 		}
 
 		// The time that fluctuate between action periods (ms)
+		// If it is smaller than 100ms then the violation value increases
 		const dif = Math.abs(data.lastPeriod - period);
 		if (dif < 100) data.vl++;
 
 		data.lastPeriod = period;
-		console.log(`${name}: ${period} => ${dif} (${data.vl})`)
+		// console.log(`${name}: ${period} => ${dif} (${data.vl})`);
 	}
 	data.lastMined = Date.now();
+
+	// Set the protection. expires after 10 minutes
 	protection.set(name, data, 600);
 	return blocked;
 }

@@ -1,6 +1,9 @@
 # Visual Code folder
 /.vscode
 
+# Development folder
+/.dev
+
 # Node modules
 /node_modules
 
