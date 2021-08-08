@@ -12,7 +12,7 @@ module.exports = {
 			required: true,
 		}
 	],
-	cooldown: 5,
+	cooldown: 5000,
 	execute(interaction) {
 		const killer = interaction.user;
 		const victim = interaction.options.getUser('target', true);
