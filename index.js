@@ -8,29 +8,65 @@ const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_M
 const { prefix, token, developer_user_id } = require('./config.json');
 const { command } = require('./admin.js');
 client.commands = new Collection();
-const cooldowns = new Collection();
+client.cooldowns = new Collection();
+
 
 client.once('ready', async () => {
 	console.log(`Logged in as ${client.user.tag}!`);
-	client.user.setActivity(`s.help (${client.guilds.cache.size} servers)`, { type: 'PLAYING' });
+	client.user.setActivity(`Minecraft on ${client.guilds.cache.size} servers`, { type: 'PLAYING' });
 
+	//Read all command files
 	const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 	for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
-	const cmd = await client.guilds.cache.get('680395302095683594').commands.create(
-		{name: command.name, description: command.description, options: command.options});
-	console.log('registered ' + command.name)
-}
+		const command = require(`./commands/${file}`);
+		client.commands.set(command.name, command);
+		await client.guilds.cache.get('680395302095683594').commands.create(
+			{name: command.name, description: command.description, options: command.options});
+		console.log('registered ' + command.name);
+	}
 });
 
 
 client.on('interactionCreate', async interaction => {
+	if (interaction.user.bot) return;
+
+	if (interaction.channel.type == 'DM') {
+		if (interaction.user.id == developer_user_id) {
+			// TODO admin command
+		} else interaction.reply('Bạn không thể sử dụng bot tại đây!');
+		return;
+	}
+
 	if (interaction.isCommand()) {
 		const command = client.commands.get(interaction.commandName);
 		if (command) {
-			console.log(command);
-			command.execute(interaction);
+			// Cooldown System
+			if (!cooldowns.has(command.name)) {
+				cooldowns.set(command.name, new Discord.Collection());
+			}
+			const now = Date.now();
+			const timestamps = cooldowns.get(command.name);
+			const cooldownAmount = (command.cooldown || 1) * 1000;
+			if (timestamps.has(interaction.user.id)) {
+				const expirationTime = timestamps.get(interaction.user.id) + cooldownAmount;
+				if (now < expirationTime) {
+					const timeLeft = (expirationTime - now) / 1000;
+					message.channel.send(`:stopwatch:  **${interaction.user.username}**! Hãy chờ ${timeLeft.toFixed(1)} giây trước khi dùng lệnh \`${command.name}\` lần nữa.`);
+					return;
+				}
+			}
+			else {
+				timestamps.set(interaction.user.id, now);
+				setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
+			}
+			// Execute command
+			try {
+				(command.execute(interaction));
+			}
+			catch (error) {
+				console.error(error);
+				interaction.reply('Đã có lỗi xảy ra khi thực hiện câu lệnh đó!');
+			}
 		}
 	}
 });

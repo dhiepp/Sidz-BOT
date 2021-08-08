@@ -1,7 +1,6 @@
 module.exports = {
 	name: 'check',
 	description: 'Perform check nubs for you',
-	aliases: ['checknubs'],
 	cooldown: 10,
 	execute(message) {
 		const name = message.author.username;
