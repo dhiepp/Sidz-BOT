@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'ping',
 	description: 'Ping!',
-	execute(message) {
-		message.reply('Pong!');
+	execute(interaction) {
+		interaction.reply('Pong!');
 	},
 };

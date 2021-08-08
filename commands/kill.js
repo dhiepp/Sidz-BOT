@@ -4,27 +4,30 @@ const Discord = require('discord.js');
 module.exports = {
 	name: 'kill',
 	description: 'Kill someone!',
-	args: true,
-	tags: true,
+	options: [
+		{
+			type: 'USER',
+			name: 'target',
+			description: 'Who do you want to kill?',
+			required: true,
+		}
+	],
 	cooldown: 5,
-	usage: '<@user>',
-	execute(message) {
-		const victimUser = message.mentions.users.first();
-
-		const killer = message.author.username;
-		const victim = victimUser.username;
+	execute(interaction) {
+		const killer = interaction.user;
+		const victim = interaction.options.getUser('target', true);
 		let deathMsg = '';
 		let isKilled = true;
 
 		// Check suicidal
-		if (message.author == victimUser) {
+		if (killer == victim) {
 			isKilled = false;
-			deathMsg = `⚔️ **${killer}** đã tự sát vì bị trầm cảm.`;
+			deathMsg = `⚔️ **${killer.username}** đã tự sát vì bị trầm cảm.`;
 		}
 		// Check creator and bot
-		if (victimUser.id === developer_user_id || victimUser.bot) {
+		if (victim.id === developer_user_id || victim.bot) {
 			isKilled = false;
-			deathMsg = `⚔️ **${killer}** cố gắng giết **${victim}** nhưng không thành công!`;
+			deathMsg = `⚔️ **${killer.username}** cố gắng giết **${victim.username}** nhưng không thành công!`;
 		}
 
 		if (isKilled) {
@@ -32,30 +35,30 @@ module.exports = {
 			if (method >= 0 && method <= 4) {
 				const weapons = ['Diamond Sword', 'Iron Sword', 'Stone Sword', 'Wooden Sword', 'Diamond Hoe', 'Wooden Axe', 'tay không'];
 				const used = Math.round(Math.random() * (weapons.length - 1));
-				deathMsg = `⚔️ **${victim}** đã bị giết bởi **${killer}** bằng ${weapons[used]}.`;
+				deathMsg = `⚔️ **${victim.username}** đã bị giết bởi **${killer.username}** bằng ${weapons[used]}.`;
 			}
 			else if (method <= 6) {
-				deathMsg = `⚔️ **${victim}** đã bị đẩy xuống void bởi **${killer}**.`;
+				deathMsg = `⚔️ **${victim.username}** đã bị đẩy xuống void bởi **${killer.username}**.`;
 			}
 			else if (method <= 7) {
-				deathMsg = `⚔️ **${victim}** đã bị bắn chết bởi **${killer}**.`;
+				deathMsg = `⚔️ **${victim.username}** đã bị bắn chết bởi **${killer.username}**.`;
 			}
 			else if (method <= 8) {
-				deathMsg = `⚔️ **${victim}** đã bị đẩy từ trên cao xuống bởi **${killer}**.`;
+				deathMsg = `⚔️ **${victim.username}** đã bị đẩy từ trên cao xuống bởi **${killer.username}**.`;
 			}
 			else if (method <= 9) {
-				deathMsg = `⚔️ **${victim}** đã bị giết bởi TNT của **${killer}**.`;
+				deathMsg = `⚔️ **${victim.username}** đã bị giết bởi TNT của **${killer.username}**.`;
 			}
 			else if (method <= 10) {
-				deathMsg = `⚔️ **${victim}** đã bị giết bởi fireball của **${killer}**.`;
+				deathMsg = `⚔️ **${victim.username}** đã bị giết bởi fireball của **${killer.username}**.`;
 			}
 		}
 
 
-		const embedDM = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setColor('RED')
 			.setDescription(deathMsg);
 
-		message.channel.send(embedDM);
+		interaction.reply({embeds: [embed]});
 	},
 };
