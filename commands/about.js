@@ -5,7 +5,6 @@ const index = require('../index.js');
 module.exports = {
 	name: 'about',
 	description: 'Show bot information',
-	cooldown: 10000,
 	execute(interaction) {
 		const client = index.client;
 		const uptime = process.uptime();
@@ -16,7 +15,7 @@ module.exports = {
 		const upString = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
 		const embed = new Discord.MessageEmbed()
-			.setAuthor(`${config.bot_name} v${config.version}`, client.user.avatarURL)
+			.setAuthor(`${config.bot_name} v${config.version}`, client.user.avatarURL())
 			.setColor('AQUA')
 			.setTitle('Made by **Sidz**`#0242`')
 			.setDescription(`Uptime: **${upString}**\nServers: **${client.guilds.cache.size}**`)

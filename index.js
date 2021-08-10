@@ -7,6 +7,7 @@ const admin = require('./admin.js');
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES]});
 
 commands = new Collection();
+actions = new Collection();
 cooldowns = new Collection();
 
 client.once('ready', async () => {
@@ -18,6 +19,12 @@ client.once('ready', async () => {
 	for (const file of commandFiles) {
 		const command = require(`./commands/${file}`);
 		commands.set(command.name, command);
+		if (command.actions) {
+			for (const action of command.actions) {
+				actions.set(action, command);
+			}
+		}
+
 		await client.guilds.cache.get('680395302095683594').commands.create(
 			{name: command.name, description: command.description, options: command.options});
 		console.log('registered ' + command.name);
@@ -63,6 +70,21 @@ client.on('interactionCreate', async interaction => {
 			catch (error) {
 				console.error(error);
 				interaction.reply('Đã có lỗi xảy ra khi thực hiện câu lệnh đó!');
+			}
+		}
+	}
+	
+
+	if (interaction.isMessageComponent()) {
+		const command = actions.get(interaction.customId);
+		if (command) {
+			// Perform action
+			try {
+				(command.perform(interaction));
+			}
+			catch (error) {
+				console.error(error);
+				interaction.editReply('Đã có lỗi xảy ra khi thực hiện câu lệnh đó!');
 			}
 		}
 	}

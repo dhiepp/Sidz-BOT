@@ -2,7 +2,6 @@ const { developer_user_id } = require('../config.json');
 module.exports = {
 	name: 'check',
 	description: 'Perform check nubs for you',
-	cooldown: 10,
 	execute(interaction) {
 		const name = interaction.user.username;
 		interaction.reply(`:clock1:  Xin chờ, đang check nubs cho **${name}** ...`)
