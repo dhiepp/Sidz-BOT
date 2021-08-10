@@ -8,6 +8,7 @@ const pickEmbeds = [];
 
 const types = [];
 for (const type in pickaxes) {
+	if (type == 'none') continue;
 	const pickaxe = pickaxes[type];
 	types.push({ label: pickaxe.name, value: type, emoji: '680442683730558999' })
 }
@@ -15,18 +16,13 @@ for (const type in pickaxes) {
 module.exports = {
 	name: 'craft',
 	description: 'Craft pickaxes',
-	// options: [
-	// 	{
-	// 		type: 'STRING',
-	// 		name: 'type',
-	// 		description: 'Which pickaxe do you want to craft?',
-	// 		choices: types,
-	// 		required: false,
-	// 	}
-	// ],
 	actions: ['craft-select', 'craft-button'],
 	cooldown: 5000,
 	async execute(interaction) {
+		const embed = new Discord.MessageEmbed()
+			.setColor('ORANGE')
+			.setTitle('⚒️ Chế tạo pickaxe')
+			.setDescription('Hãy chọn một pickaxe!');
 		const select = new Discord.MessageActionRow()
 			.addComponents(
 				new Discord.MessageSelectMenu()
@@ -39,10 +35,27 @@ module.exports = {
 					.setCustomId('craft-button')
 					.setLabel('Craft Pickaxe')
 					.setStyle('PRIMARY'));
-		await interaction.reply({ content: '1', components: [select, button] });
+		await interaction.reply({ embeds: [embed], components: [select, button] });
 	},
 	async perform(interaction) {
-		interaction.editReply('hi');
+		const type = interaction.values[0];
+		const pickaxe = pickaxes[type];
+		const material = resources[pickaxe.craft.material];
+		const amount = pickaxe.craft.amount;
+
+		let mineables = '';
+		for (const mineable of pickaxe.mineable) {
+			mineables += resources[mineable].icon + ' ';
+		}
+
+		const embed = new Discord.MessageEmbed()
+			.setColor('ORANGE')
+			.setTitle('⚒️ Chế tạo pickaxe')
+			.setDescription(`${pickaxe.icon} **${pickaxe.name}**\nĐộ bền: **${pickaxe.durability}**\nNguyên liệu: ${material.icon} **x${amount}**`)
+			.addField('Khoáng sản đào được', mineables)
+			.addField('⚠️ Lưu ý', 'Pickaxe cũ của bạn và tất cả enchants sẽ bị mất!');
+
+		interaction.update({ embeds: [embed] });
 	}
 }
 // 		// Show craftable pickaxes
