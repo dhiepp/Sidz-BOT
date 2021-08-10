@@ -5,9 +5,8 @@ const index = require('../index.js');
 module.exports = {
 	name: 'about',
 	description: 'Show bot information',
-	aliases: ['bot', 'sidz'],
-	cooldown: 10,
-	execute(message) {
+	cooldown: 10000,
+	execute(interaction) {
 		const client = index.client;
 		const uptime = process.uptime();
 		const days = Math.floor(uptime / 86400);
@@ -16,16 +15,15 @@ module.exports = {
 		const seconds = Math.floor(uptime % 60).toString().padStart(2, '0');
 		const upString = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setAuthor(`${config.bot_name} v${config.version}`, client.user.avatarURL)
 			.setColor('AQUA')
 			.setTitle('Made by **Sidz**`#0242`')
-			.setDescription(`Prefix: \`${config.prefix}\`` + '\nCommands: `s.help`'
-				+ `\nUptime: **${upString}**\nServers: **${client.guilds.size}**`)
+			.setDescription(`Uptime: **${upString}**\nServers: **${client.guilds.cache.size}**`)
 			.addField('🗨️ Bot Server', `[Click to join bot server](${config.server_link})`)
 			.addField('🤖 Invite Bot', `[Click to add to your server](${config.invite_link})`)
 			.setFooter(config.footer);
 
-		message.channel.send(embed);
+		interaction.reply({ embeds: [embed] })
 	},
 };
