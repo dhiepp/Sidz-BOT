@@ -60,6 +60,8 @@ CREATE TABLE `user` (
   `id` varchar(64) NOT NULL,
   `username` varchar(32) DEFAULT NULL,
   `tag` varchar(4) DEFAULT NULL,
+  `rank` varchar(1) DEFAULT 'A',
+  `prestige` int(11) DEFAULT '1',
   `money` bigint(20) DEFAULT '0',
   `xp` bigint(20) DEFAULT '0',
   `blocks` bigint(20) DEFAULT '0',

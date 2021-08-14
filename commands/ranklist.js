@@ -8,10 +8,12 @@ module.exports = {
 	name: 'ranklist',
 	description: 'List of ranks and prices',
 	aliases: ['ranks', 'rl'],
-	cooldown: 3,
-	async execute(message) {
+	cooldown: 3000,
+	async execute(interaction) {
+		const author = interaction.user;
+		
 		// Get user data
-		const user = await userdata.getUser(message.author);
+		const user = await userdata.getUser(author);
 
 		let ranksMessage = '';
 
@@ -22,12 +24,12 @@ module.exports = {
 			}
 		}
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setColor('BLUE')
 			.setTitle('Danh sách các rank')
 			.setDescription(ranksMessage)
 			.setFooter(footer);
 
-		message.channel.send(embed);
+		interaction.reply({ embeds: [embed] });
 	},
 };

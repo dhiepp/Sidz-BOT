@@ -10,6 +10,7 @@
 		"id": 1,
 		"name": "Wooden Pickaxe",
 		"icon": "<:WoodPickaxe:680442683931754536>",
+		"emoji": "680442683931754536",
 		"durability": 10,
 		"mineable": ["cobble"],
 		"craft": {
@@ -21,6 +22,7 @@
 		"id": 2,
 		"name": "Stone Pickaxe",
 		"icon": "<:StonePickaxe:680442683927560311>",
+		"emoji": "680442683927560311",
 		"durability": 100,
 		"mineable": ["coal", "iron", "cobble"],
 		"craft": {
@@ -32,6 +34,7 @@
 		"id": 3,
 		"name": "Iron Pickaxe",
 		"icon": "<:IronPickaxe:680442683910783045>",
+		"emoji": "680442683910783045",
 		"durability": 200,
 		"mineable": ["coal", "iron", "redstone", "gold", "cobble"],
 		"craft": {
@@ -43,6 +46,7 @@
 		"id": 4,
 		"name": "Golden Pickaxe",
 		"icon": "<:GoldPickaxe:680442683868708892>",
+		"emoji": "680442683868708892",
 		"durability": 500,
 		"mineable": ["coal", "iron", "redstone", "gold", "lapis", "diamond", "cobble"],
 		"craft": {
@@ -54,6 +58,7 @@
 		"id": 5,
 		"name": "Diamond Pickaxe",
 		"icon": "<:DiamondPickaxe:680442683730558999>",
+		"emoji": "680442683730558999",
 		"durability": 1000,
 		"mineable": ["coal", "iron", "redstone", "gold", "lapis", "diamond", "emerald", "netherite", "cobble"],
 		"craft": {
@@ -65,6 +70,7 @@
 		"id": 6,
 		"name": "Netherite Pickaxe",
 		"icon": "<:NetheritePickaxe:680442683587952647>",
+		"emoji": "680442683587952647",
 		"durability": 2000,
 		"mineable": ["coal", "iron", "redstone", "gold", "lapis", "diamond", "emerald", "netherite", "glowstone", "quartz", "cobble"],
 		"craft": {

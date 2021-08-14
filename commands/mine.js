@@ -8,21 +8,22 @@ const userdata = require('../mining/userdata.js');
 const inventorydata = require('../mining/inventorydata.js');
 const NodeCache = require('node-cache');
 
-const dynamicCD = 5;
+const dynamicCD = 5000;
 
 module.exports = {
 	name: 'mine',
 	description: 'Go mining...',
 	cooldown: dynamicCD,
-	async execute(message) {
+	async execute(interaction) {
+		const author = interaction.user;
+		
 		// Cheat detection
-		const name = message.author.username;
-		if (cheatDetect(name)) return message.channel.send(`**${name}**! Bạn chưa thể đi mine lúc này!`);
+		if (cheatDetect(author.id)) return interaction.reply(`**${author.username}**! Bạn chưa thể đi mine lúc này!`);
 
 		// Get user data
-		const user = await userdata.getUser(message.author);
+		const user = await userdata.getUser(interaction.user);
 		// Get inventory
-		const inv = await inventorydata.getInv(message.author.id);
+		const inv = await inventorydata.getInv(author.id);
 
 		const pick = pickaxes[user.pickaxe];
 		let enchantMessage = '';
@@ -83,16 +84,16 @@ module.exports = {
 		// Increase blocks mined
 		user.blocks += 1 + user.efficiency;
 
-		inventorydata.updateItems(message.author.id, inv);
-		userdata.mining(message.author, user.xp + gainedXP, user.durability, user.blocks);
+		inventorydata.updateItems(author.id, inv);
+		userdata.mining(author, user.xp + gainedXP, user.durability, user.blocks);
 		// Break the pickaxe if not hand
 		if (user.durability <= 0 && user.pickaxe !== 'none') {
 			enchantMessage += '\n💥 **Pickaxe của bạn đã bị hỏng!**';
-			userdata.updatePickaxe(message.author, 'none', 0, true);
+			userdata.updatePickaxe(author.id, 'none', 0, true);
 		}
 
-		const embed = new Discord.RichEmbed()
-			.setAuthor(`${message.author.username} đã đi mine!`, message.author.avatarURL)
+		const embed = new Discord.MessageEmbed()
+			.setAuthor(`${author.username} đã đi mine!`, interaction.user.avatarURL())
 			.setTitle(`${pick.icon} ${pick.name} \`(${user.durability}/${pick.durability})\``)
 			.setColor('GREEN')
 			.setDescription(enchantMessage)
@@ -100,15 +101,15 @@ module.exports = {
 			.addField('Experience Gained', `${experience.icon} **${gainedXP}**`)
 			.setFooter(footer);
 
-		message.channel.send(embed);
+		interaction.reply({ embeds: [embed] });
 	},
 };
 
 const protection = new NodeCache();
 
-function cheatDetect(name) {
+function cheatDetect(id) {
 	let blocked = false;
-	let data = protection.get(name);
+	let data = protection.get(id);
 	if (data === undefined) {
 		data = {};
 		data.lastPeriod = 0;
@@ -118,8 +119,7 @@ function cheatDetect(name) {
 		const period = Date.now() - data.lastMined;
 
 		// Perform protection. Every violation add 1/4 seconds to the cooldown
-		if (period <= ((dynamicCD + data.vl / 4) * 1000)) {
-			// console.log('BLOCKED ' + name);
+		if (period <= (dynamicCD + data.vl * 1000 / 4)) {
 			blocked = true;
 		}
 
@@ -129,11 +129,10 @@ function cheatDetect(name) {
 		if (dif < 100) data.vl++;
 
 		data.lastPeriod = period;
-		// console.log(`${name}: ${period} => ${dif} (${data.vl})`);
 	}
 	data.lastMined = Date.now();
 
 	// Set the protection. expires after 10 minutes
-	protection.set(name, data, 600);
+	protection.set(id, data, 600);
 	return blocked;
 }

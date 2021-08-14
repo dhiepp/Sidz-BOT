@@ -20,8 +20,8 @@ client.once('ready', async () => {
 		const command = require(`./commands/${file}`);
 		commands.set(command.name, command);
 		if (command.actions) {
-			for (const action of command.actions) {
-				actions.set(action, command);
+			for (const action in command.actions) {
+				actions.set(action, command.actions[action]);
 			}
 		}
 
@@ -65,26 +65,26 @@ client.on('interactionCreate', async interaction => {
 
 			// Execute command
 			try {
-				(command.execute(interaction));
+				await command.execute(interaction);
 			}
 			catch (error) {
 				console.error(error);
-				interaction.reply('Đã có lỗi xảy ra khi thực hiện câu lệnh đó!');
+				interaction.reply('🛑 Đã có lỗi xảy ra khi thực hiện câu lệnh đó!');
 			}
 		}
 	}
 	
 
-	if (interaction.isMessageComponent()) {
-		const command = actions.get(interaction.customId);
-		if (command) {
+	if (interaction.isMessageComponent() && interaction.user.id == interaction.message.interaction.user.id) {
+		const action = actions.get(interaction.customId);
+		if (action) {
 			// Perform action
 			try {
-				(command.perform(interaction));
+				await action(interaction);
 			}
 			catch (error) {
 				console.error(error);
-				interaction.editReply('Đã có lỗi xảy ra khi thực hiện câu lệnh đó!');
+				interaction.update('🛑 Đã có lỗi xảy ra khi thực hiện hành động đó!');
 			}
 		}
 	}

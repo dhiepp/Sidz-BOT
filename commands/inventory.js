@@ -6,25 +6,24 @@ const inventorydata = require('../mining/inventorydata.js');
 module.exports = {
 	name: 'inventory',
 	description: 'Check your inventory',
-	aliases: ['inv'],
-	cooldown: 10,
-	async execute(message) {
+	cooldown: 10000,
+	async execute(interaction) {
+		const author = interaction.user;
 
 		// Get inv data
-		const inv = await inventorydata.getInv(message.author.id);
+		const inv = await inventorydata.getInv(author.id);
 
-		let resMessage = '';
-
+		let result = '';
 		for (const item in inv) {
-			resMessage += (`${resources[item].icon} **${resources[item].name}**: \`${inv[item]}\`\n`);
+			result += (`${resources[item].icon} **${resources[item].name}**: \`${inv[item]}\`\n`);
 		}
 
-		const embed = new Discord.RichEmbed()
-			.setAuthor(`Rương đồ của ${message.author.username}`, message.author.avatarURL)
+		const embed = new Discord.MessageEmbed()
+			.setAuthor(`Rương đồ của ${author.username}`, author.avatarURL())
 			.setColor('BLUE')
-			.setDescription(resMessage)
+			.setDescription(result)
 			.setFooter(footer);
 
-		message.channel.send(embed);
+		interaction.reply({ embeds: [embed] });
 	},
 };

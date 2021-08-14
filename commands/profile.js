@@ -4,16 +4,17 @@ const userdata = require('../mining/userdata.js');
 const { dollar, experience } = require('../mining/currency.json');
 
 module.exports = {
-	name: 'me',
+	name: 'profile',
 	description: 'Check your profile',
-	aliases: ['profile', 'my'],
-	cooldown: 10,
-	async execute(message) {
-		// Get user data
-		const user = await userdata.getUser(message.author);
+	cooldown: 10000,
+	async execute(interaction) {
+		const author = interaction.user;
 
-		const embed = new Discord.RichEmbed()
-			.setAuthor(`Tài khoản của ${message.author.username}`, message.author.avatarURL)
+		// Get user data
+		const user = await userdata.getUser(author);
+
+		const embed = new Discord.MessageEmbed()
+			.setAuthor(`Tài khoản của ${author.username}`, author.avatarURL())
 			.setColor('BLUE')
 			.setDescription(`Rank: [**${user.rank} ${user.prestige}**]`
 				+ `\nMultiplier: **x${(user.prestige * 0.1 + 0.9).toFixed(1)}**`
@@ -22,11 +23,11 @@ module.exports = {
 				+ `\nĐã đào: **${user.blocks}** blocks`)
 			.setFooter(footer);
 
-		if (user.username !== message.author.username) {
-			userdata.updateUser(message.author);
+		if (user.username !== author.username) {
+			userdata.updateUser(author);
 			embed.addField('📝 Cập nhật thông tin', 'Đã cập nhật dữ liệu mới của bạn!');
 		}
 
-		message.channel.send(embed);
+		interaction.reply({ embeds: [embed] });
 	},
 };
