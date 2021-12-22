@@ -96,9 +96,9 @@ module.exports = {
 				const embed = helpPages[page].setFooter(`Trang ${page + 1} / ${helpPages.length}`);
 				await interaction.update({ embeds: [embed] });
 			});
-			collector.on('end', async interaction => {
+			collector.on('end', async () => {
 				const embed = helpPages[page].setColor('GREY');
-				await interaction.update({ embeds: [embed], components: [] });
+				await selection.update({ embeds: [embed], components: [] });
 			});
 			return;
 		}

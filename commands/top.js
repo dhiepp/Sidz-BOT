@@ -48,9 +48,9 @@ module.exports = {
 			embed.setFooter(`Trang ${page + 1} / ${types.length}`);
 			await interaction.update({ embeds: [embed] });
 		});
-		collector.on('end', async interaction => {
+		collector.on('end', async () => {
 			embed.setColor('GREY');
-			await interaction.update({ embeds: [embed], components: [] });
+			await selection.update({ embeds: [embed], components: [] });
 		});
 	},
 };
