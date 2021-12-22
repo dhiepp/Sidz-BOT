@@ -51,7 +51,7 @@ module.exports = {
 			});
 			collector.on('end', async () => {
 				embed.setColor('GREY');
-				await selection.update({ embeds: [embed], components: [] });
+				await selection.edit({ embeds: [embed], components: [] });
 			});
 		}
 

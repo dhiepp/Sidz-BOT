@@ -98,7 +98,7 @@ module.exports = {
 			});
 			collector.on('end', async () => {
 				const embed = helpPages[page].setColor('GREY');
-				await selection.update({ embeds: [embed], components: [] });
+				await selection.edit({ embeds: [embed], components: [] });
 			});
 			return;
 		}
