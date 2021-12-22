@@ -37,7 +37,7 @@ CREATE TABLE `inventory` (
   `glowstone` int(10) unsigned DEFAULT '0',
   `quartz` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,6 +60,8 @@ CREATE TABLE `user` (
   `id` varchar(64) NOT NULL,
   `username` varchar(32) DEFAULT NULL,
   `tag` varchar(4) DEFAULT NULL,
+  `rank` varchar(1) DEFAULT 'A',
+  `prestige` int(11) DEFAULT '1',
   `money` bigint(20) DEFAULT '0',
   `xp` bigint(20) DEFAULT '0',
   `blocks` bigint(20) DEFAULT '0',
@@ -69,7 +71,7 @@ CREATE TABLE `user` (
   `unbreaking` int(11) DEFAULT '0',
   `fortune` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
