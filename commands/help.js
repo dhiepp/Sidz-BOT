@@ -98,7 +98,7 @@ module.exports = {
 			});
 			collector.on('end', async interaction => {
 				const embed = helpPages[page].setColor('GRAY');
-				await interaction.update({ embeds: [embed] });
+				await interaction.update({ embeds: [embed], components: [] });
 			});
 			return;
 		}

@@ -46,12 +46,12 @@ module.exports = {
 				}
 				embed = getPickEmbed(page);
 				if (embed === null) return;
-				embed.setFooter(`Trang ${page + 1} / ${pickEmbeds.length}`)
+				embed.setFooter(`Trang ${page + 1} / ${pickEmbeds.length}`);
 				await interaction.update({ embeds: [embed] });
 			});
 			collector.on('end', async interaction => {
-				embed.setColor('GRAY')
-				await interaction.update({ embeds: [embed] });
+				embed.setColor('GRAY');
+				await interaction.update({ embeds: [embed], components: [] });
 			});
 		}
 

@@ -50,7 +50,7 @@ module.exports = {
 		});
 		collector.on('end', async interaction => {
 			embed.setColor('GRAY');
-			await interaction.update({ embeds: [embed] });
+			await interaction.update({ embeds: [embed], components: [] });
 		});
 	},
 };
