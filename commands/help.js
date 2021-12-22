@@ -97,7 +97,7 @@ module.exports = {
 				await interaction.update({ embeds: [embed] });
 			});
 			collector.on('end', async interaction => {
-				const embed = helpPages[page].setColor('GRAY');
+				const embed = helpPages[page].setColor('GREY');
 				await interaction.update({ embeds: [embed], components: [] });
 			});
 			return;

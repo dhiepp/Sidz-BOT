@@ -48,17 +48,17 @@ module.exports = {
 				const reaction = collected.first();
 
 				if (reaction.emoji.name === '✅') {
-					embed.setColor('GRAY').setFooter('Yêu cầu này đã được xác nhận');
+					embed.setColor('GREY').setFooter('Yêu cầu này đã được xác nhận');
 					prestigeUp(message, nextPres);
 				}
 				else {
-					embed.setColor('GRAY').setFooter('Yêu cầu này đã bị hủy');
+					embed.setColor('GREY').setFooter('Yêu cầu này đã bị hủy');
 				}
 				selection.edit({ embeds: [embed] });
 			})
 			.catch(() => {
 				selection.clearReactions();
-				embed.setColor('GRAY').setFooter('Yêu cầu này đã hết thời gian');
+				embed.setColor('GREY').setFooter('Yêu cầu này đã hết thời gian');
 				selection.edit({ embeds: [embed] });
 			});
 	},
