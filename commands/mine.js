@@ -91,7 +91,7 @@ module.exports = {
 			userdata.updatePickaxe(message.author, 'none', 0, true);
 		}
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setAuthor(`${message.author.username} đã đi mine!`, message.author.avatarURL)
 			.setTitle(`${pick.icon} ${pick.name} \`(${user.durability}/${pick.durability})\``)
 			.setColor('GREEN')
@@ -100,7 +100,7 @@ module.exports = {
 			.addField('Experience Gained', `${experience.icon} **${gainedXP}**`)
 			.setFooter(footer);
 
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	},
 };
 

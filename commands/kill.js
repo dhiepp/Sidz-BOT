@@ -52,10 +52,10 @@ module.exports = {
 		}
 
 
-		const embedDM = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setColor('RED')
 			.setDescription(deathMsg);
 
-		message.channel.send(embedDM);
+		message.channel.send({ embeds: [embed] });
 	},
 };

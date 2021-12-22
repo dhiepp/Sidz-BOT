@@ -1,11 +1,12 @@
 const fs = require('fs');
-const Discord = require('discord.js');
-const client = new Discord.Client();
+const {Client, Intents, Collection} = require('discord.js');
 const privateDM = require('./privateDM.js');
 const admin = require('./admin.js');
 
+const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES]});
+
 const { prefix, token, developer_user_id } = require('./config.json');
-client.commands = new Discord.Collection();
+client.commands = new Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -13,14 +14,14 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
-const cooldowns = new Discord.Collection();
+const cooldowns = new Collection();
 
 client.once('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 	client.user.setActivity(`s.help (${client.guilds.size} servers)`, { type: 'PLAYING' });
 });
 
-client.on('message', async message => {
+client.on('messageCreate', async message => {
 	if (message.author.bot) return;
 
 	// Private DM
@@ -33,7 +34,7 @@ client.on('message', async message => {
 	}
 
 	// Check text channel
-	if (message.channel.type !== 'text') {
+	if (message.channel.type !== 'GUILD_TEXT') {
 		return message.channel.send('Bạn không thể sử dụng bot tại đây!');
 	}
 
@@ -73,7 +74,7 @@ client.on('message', async message => {
 
 	// Check if cooldowns has command and add
 	if (!cooldowns.has(command.name)) {
-		cooldowns.set(command.name, new Discord.Collection());
+		cooldowns.set(command.name, new Collection());
 	}
 
 	const now = Date.now();

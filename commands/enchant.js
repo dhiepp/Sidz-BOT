@@ -18,13 +18,13 @@ module.exports = {
 
 		// No pick
 		if (user.pickaxe === 'none') {
-			const embed = new Discord.RichEmbed()
+			const embed = new Discord.MessageEmbed()
 				.setAuthor(message.author.username, message.author.avatarURL)
 				.setColor('PURPLE')
 				.setTitle('⭐ Enchanting pickaxe')
 				.setDescription(pick.icon + ' Bạn không có pickaxe!\nHãy dùng lệnh `s.craft` để chế tạo.')
 				.setFooter(footer);
-			message.channel.send(embed);
+			message.channel.send({ embeds: [embed] });
 			return;
 		}
 
@@ -34,7 +34,7 @@ module.exports = {
 				+ '\nDùng lệnh `s.enchant [enchantment] [level]` để phù phép'
 				+ `\nBạn đang có ${experience.icon} **${user.xp}** ${experience.name}`;
 
-			const embed = new Discord.RichEmbed()
+			const embed = new Discord.MessageEmbed()
 				.setAuthor(message.author.username, message.author.avatarURL)
 				.setColor('PURPLE')
 				.setTitle('⭐ Enchanting pickaxe')
@@ -56,7 +56,7 @@ module.exports = {
 				}
 				embed.addField(`${enchant.name} ${cur}`, enMsg);
 			}
-			message.channel.send(embed);
+			message.channel.send({ embeds: [embed] });
 		}
 
 		// Enchanting

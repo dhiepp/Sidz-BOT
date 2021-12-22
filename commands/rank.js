@@ -33,13 +33,13 @@ module.exports = {
 			helpMessage = ['🔼 Lên rank', 'Dùng lệnh `s.rankup` để lên rank\nDùng lệnh `s.rankup max` để lên cấp cao nhất có thể'];
 		}
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setAuthor(`${message.author.username}`, message.author.avatarURL)
 			.setColor('BLUE')
 			.setDescription(rankMessage)
 			.addField(helpMessage[0], helpMessage[1])
 			.setFooter(footer);
 
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	},
 };

@@ -12,7 +12,7 @@ module.exports = {
 		// Get user data
 		const user = await userdata.getUser(message.author);
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setAuthor(`Tài khoản của ${message.author.username}`, message.author.avatarURL)
 			.setColor('BLUE')
 			.setDescription(`Rank: [**${user.rank} ${user.prestige}**]`
@@ -27,6 +27,6 @@ module.exports = {
 			embed.addField('📝 Cập nhật thông tin', 'Đã cập nhật dữ liệu mới của bạn!');
 		}
 
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	},
 };

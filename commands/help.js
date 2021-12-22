@@ -16,7 +16,7 @@ module.exports = {
 			const helpPages = [];
 
 			// Page 1
-			const embed1 = new Discord.RichEmbed()
+			const embed1 = new Discord.MessageEmbed()
 				.setColor('AQUA')
 				.setTitle(`🤖 Các câu lệnh của **${bot_name}**`)
 				.setDescription('**Tất cả câu lệnh**\n`' + commands.map(command => command.name).join(', ') + '`')
@@ -25,7 +25,7 @@ module.exports = {
 			helpPages.push(embed1);
 
 			// Page 2
-			const embed2 = new Discord.RichEmbed()
+			const embed2 = new Discord.MessageEmbed()
 				.setColor('AQUA')
 				.setTitle(`🤖 Các câu lệnh của **${bot_name}**`)
 				.addField('⛏️ Trợ giúp chức năng đào khoáng sản `(1/2)`',
@@ -40,7 +40,7 @@ module.exports = {
 			helpPages.push(embed2);
 
 			// Page 3
-			const embed3 = new Discord.RichEmbed()
+			const embed3 = new Discord.MessageEmbed()
 				.setColor('AQUA')
 				.setTitle(`🤖 Các câu lệnh của **${bot_name}**`)
 				.addField('⛏️ Trợ giúp chức năng đào khoáng sản `(2/2)`',
@@ -53,7 +53,7 @@ module.exports = {
 			helpPages.push(embed3);
 
 			// Page 4
-			const embed4 = new Discord.RichEmbed()
+			const embed4 = new Discord.MessageEmbed()
 				.setColor('AQUA')
 				.setTitle(`🤖 Các câu lệnh của **${bot_name}**`)
 				.addField('<:RedBed:683144711145652232> Trợ giúp chức năng tra cứu Bedwars',
@@ -69,32 +69,36 @@ module.exports = {
 
 			let page = 0;
 
-			const selection = await message.channel.send(helpPages[0].setFooter(`Trang ${page + 1} / ${helpPages.length}`));
-			await selection.react('⬅️');
-			await selection.react('➡️');
+			const embed = helpPages[0].setFooter(`Trang ${page + 1} / ${helpPages.length}`);
+			const row = new Discord.MessageActionRow()
+				.addComponents(
+					new Discord.MessageButton().setCustomId('previous').setStyle('SECONDARY').setEmoji('⬅️'),
+					new Discord.MessageButton().setCustomId('next').setStyle('SECONDARY').setEmoji('➡️'),
+				);
+			const selection = await message.channel.send({ embeds: [embed], components: [row] });
 
-			const reactionCollector = selection.createReactionCollector(
-				(reaction, user) => ['⬅️', '➡️'].includes(reaction.emoji.name) && user.id === message.author.id,
+			const collector = selection.createMessageComponentCollector(
+				interaction => interaction.customId === 'previous' | 'next' && interaction.user.id === message.author.id,
 				{ time: 60000 },
 			);
 
-			reactionCollector.on('collect', reaction => {
-				reaction.remove(message.author);
-				switch (reaction.emoji.name) {
-				case '⬅️':
+			collector.on('collect', async interaction => {
+				switch (interaction.customId) {
+				case 'previous':
 					page = page > 0 ? --page : helpPages.length - 1;
 					break;
-				case '➡️':
+				case 'next':
 					page = page + 1 < helpPages.length ? ++page : 0;
 					break;
 				default:
 					break;
 				}
-				selection.edit(helpPages[page].setFooter(`Trang ${page + 1} / ${helpPages.length}`));
+				const embed = helpPages[page].setFooter(`Trang ${page + 1} / ${helpPages.length}`);
+				await interaction.update({ embeds: [embed] });
 			});
-			reactionCollector.on('end', () => {
-				selection.clearReactions();
-				selection.edit(helpPages[page].setColor('GRAY'));
+			collector.on('end', async () => {
+				const embed = helpPages[page].setColor('GRAY');
+				await interaction.update({ embeds: [embed] });
 			});
 			return;
 		}

@@ -19,12 +19,12 @@ module.exports = {
 			resMessage += (`${resources[item].icon} **${resources[item].name}**: \`${inv[item]}\`\n`);
 		}
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setAuthor(`Rương đồ của ${message.author.username}`, message.author.avatarURL)
 			.setColor('BLUE')
 			.setDescription(resMessage)
 			.setFooter(footer);
 
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	},
 };

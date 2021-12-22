@@ -25,7 +25,7 @@ module.exports = {
 
 		const newMul = (nextPres * 0.1 + 0.9).toFixed(1);
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setAuthor(`${message.author.username}`, message.author.avatarURL)
 			.setColor('RED')
 			.setTitle('⏫ Bạn có muốn lên cấp tiếp theo không?')
@@ -35,7 +35,7 @@ module.exports = {
 			.addField('Xác nhận', 'React với ✅ để xác nhận lên cấp')
 			.setFooter('Yêu cầu này sẽ hết hạn sau 10 giây');
 
-		const selection = await message.channel.send(embed);
+		const selection = await message.channel.send({ embeds: [embed] });
 		await selection.react('✅');
 		await selection.react('❎');
 
@@ -54,12 +54,12 @@ module.exports = {
 				else {
 					embed.setColor('GRAY').setFooter('Yêu cầu này đã bị hủy');
 				}
-				selection.edit(embed);
+				selection.edit({ embeds: [embed] });
 			})
 			.catch(() => {
 				selection.clearReactions();
 				embed.setColor('GRAY').setFooter('Yêu cầu này đã hết thời gian');
-				selection.edit(embed);
+				selection.edit({ embeds: [embed] });
 			});
 	},
 };
@@ -93,11 +93,11 @@ async function prestigeUp(message, nextPres) {
 
 	const newMul = (nextPres * 0.1 + 0.9).toFixed(1);
 
-	const embed = new Discord.RichEmbed()
+	const embed = new Discord.MessageEmbed()
 		.setAuthor(`${message.author.username}`, message.author.avatarURL)
 		.setColor('GREEN')
 		.setTitle(`⏫ Bạn đã lên cấp! Rank hiện tại: [**A ${nextPres}**]!`)
 		.setDescription(`🔓 Đã nâng cấp giá bán khoáng sản: **x${newMul}**!`)
 		.setFooter(footer);
-	message.channel.send(embed);
+	message.channel.send({ embeds: [embed] });
 }

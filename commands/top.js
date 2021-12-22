@@ -18,23 +18,26 @@ module.exports = {
 
 		let embed = await getTop(message, types[page]);
 		if (embed == null) return;
+		embed.setFooter(`Trang ${page + 1} / ${types.length}`)
 
-		const selection = await message.channel.send(embed.setFooter(`Trang ${page + 1} / ${types.length}`));
-		await selection.react('⬅️');
-		await selection.react('➡️');
+		const row = new Discord.MessageActionRow()
+			.addComponents(
+				new Discord.MessageButton().setCustomId('previous').setStyle('SECONDARY').setEmoji('⬅️'),
+				new Discord.MessageButton().setCustomId('next').setStyle('SECONDARY').setEmoji('➡️'),
+			);
+		const selection = await message.channel.send({ embeds: [embed], components: [row] });
 
-		const reactionCollector = selection.createReactionCollector(
-			(reaction, user) => ['⬅️', '➡️'].includes(reaction.emoji.name) && user.id === message.author.id,
+		const collector = selection.createMessageComponentCollector(
+			interaction => interaction.customId === 'previous' | 'next' && interaction.user.id === message.author.id,
 			{ time: 60000 },
 		);
 
-		reactionCollector.on('collect', async (reaction) => {
-			reaction.remove(message.author);
-			switch (reaction.emoji.name) {
-			case '⬅️':
+		collector.on('collect', async interaction => {
+			switch (interaction.customId) {
+			case 'previous':
 				page = page > 0 ? --page : types.length - 1;
 				break;
-			case '➡️':
+			case 'next':
 				page = page + 1 < types.length ? ++page : 0;
 				break;
 			default:
@@ -42,11 +45,12 @@ module.exports = {
 			}
 			embed = await getTop(message, types[page]);
 			if (embed === null) return;
-			selection.edit(embed.setFooter(`Trang ${page + 1} / ${types.length}`));
+			embed.setFooter(`Trang ${page + 1} / ${types.length}`);
+			await interaction.update({ embeds: [embed] });
 		});
-		reactionCollector.on('end', () => {
-			selection.clearReactions();
-			selection.edit(embed.setColor('GRAY'));
+		collector.on('end', async () => {
+			embed.setColor('GRAY');
+			await interaction.update({ embeds: [embed] });
 		});
 	},
 };
@@ -83,7 +87,7 @@ async function getTop(message, type) {
 		count++;
 	}
 
-	embed = new Discord.RichEmbed()
+	embed = new Discord.MessageEmbed()
 		.setColor('GOLD')
 		.setTitle(`📜 Bảng xếp hạng ${typeNames[type]}`)
 		.setDescription(leaderboardMessage)

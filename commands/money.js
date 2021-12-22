@@ -13,12 +13,12 @@ module.exports = {
 		// Get user data
 		const user = await userdata.getUser(message.author);
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setAuthor(`Tài sản của ${message.author.username}`, message.author.avatarURL)
 			.setColor('BLUE')
 			.setDescription(`${dollar.icon} **${user.money.toLocaleString()}** ${dollar.name}`)
 			.setFooter(footer);
 
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	},
 };

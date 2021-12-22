@@ -53,12 +53,12 @@ module.exports = {
 		userdata.updateRank(message.author, nextRank);
 		userdata.updateMoney(message.author, user.money - price);
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setAuthor(`${message.author.username}`, message.author.avatarURL)
 			.setColor('GREEN')
 			.setDescription(`Bạn đã lên rank [**${nextRank} ${currentPres}**]!`)
 			.setFooter(footer);
 
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	},
 };

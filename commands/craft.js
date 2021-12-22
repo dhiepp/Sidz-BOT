@@ -19,23 +19,26 @@ module.exports = {
 
 			let embed = getPickEmbed(page);
 			if (embed == null) return;
+			embed.setFooter(`Trang ${page + 1} / ${pickEmbeds.length}`)
 
-			const selection = await message.channel.send(embed.setFooter(`Trang ${page + 1} / ${pickEmbeds.length}`));
-			await selection.react('⬅️');
-			await selection.react('➡️');
+			const row = new Discord.MessageActionRow()
+				.addComponents(
+					new Discord.MessageButton().setCustomId('previous').setStyle('SECONDARY').setEmoji('⬅️'),
+					new Discord.MessageButton().setCustomId('next').setStyle('SECONDARY').setEmoji('➡️'),
+				);
+			const selection = await message.channel.send({ embeds: [embed], components: [row] });
 
-			const reactionCollector = selection.createReactionCollector(
-				(reaction, reactor) => ['⬅️', '➡️'].includes(reaction.emoji.name) && reactor.id === message.author.id,
+			const collector = selection.createMessageComponentCollector(
+				interaction => interaction.customId === 'previous' | 'next' && interaction.user.id === message.author.id,
 				{ time: 60000 },
 			);
 
-			reactionCollector.on('collect', async (reaction) => {
-				reaction.remove(message.author);
-				switch (reaction.emoji.name) {
-				case '⬅️':
+			collector.on('collect', async interaction => {
+				switch (interaction.customId) {
+				case 'previous':
 					page = page > 0 ? --page : pickEmbeds.length - 1;
 					break;
-				case '➡️':
+				case 'next':
 					page = page + 1 < pickEmbeds.length ? ++page : 0;
 					break;
 				default:
@@ -43,11 +46,12 @@ module.exports = {
 				}
 				embed = getPickEmbed(page);
 				if (embed === null) return;
-				selection.edit(embed.setFooter(`Trang ${page + 1} / ${pickEmbeds.length}`));
+				embed.setFooter(`Trang ${page + 1} / ${pickEmbeds.length}`)
+				await interaction.update({ embeds: [embed] });
 			});
-			reactionCollector.on('end', () => {
-				selection.clearReactions();
-				selection.edit(embed.setColor('GRAY'));
+			collector.on('end', async () => {
+				embed.setColor('GRAY')
+				await interaction.update({ embeds: [embed] });
 			});
 		}
 
@@ -95,7 +99,7 @@ function getPickEmbed(page) {
 				mineableMessage += resources[mineable].icon + ' ';
 			}
 
-			const embed = new Discord.RichEmbed()
+			const embed = new Discord.MessageEmbed()
 				.setColor('ORANGE')
 				.setTitle('⚒️ Chế tạo pickaxe')
 				.setDescription(`${pick.icon} **${pick.name}**\nĐộ bền: **${pick.durability}**\nNguyên liệu: ${material.icon} **x${amount}**`)

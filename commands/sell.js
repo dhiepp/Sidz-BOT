@@ -101,13 +101,13 @@ module.exports = {
 		userdata.updateMoney(message.author, user.money + earned);
 		inventorydata.updateItems(message.author.id, inv);
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setAuthor(`${message.author.username} đã bán khoáng sản!`, message.author.avatarURL)
 			.setColor('GREEN')
 			.addField('Resources Sold', soldMessage)
 			.addField('Money Earned', `${dollar.icon} **+${earned.toLocaleString()}** ${dollar.name}${mulStr}`)
 			.setFooter(footer);
 
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	},
 };

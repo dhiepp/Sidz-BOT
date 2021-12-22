@@ -20,13 +20,13 @@ module.exports = {
 
 		// No pick
 		if (user.pickaxe === 'none') {
-			const embed = new Discord.RichEmbed()
+			const embed = new Discord.MessageEmbed()
 				.setAuthor(message.author.username, message.author.avatarURL)
 				.setColor('LUMINOUS_VIVID_PINK')
 				.setTitle('🩹 Fixing pickaxe')
 				.setDescription(pick.icon + ' Bạn không có pickaxe!\nHãy dùng lệnh `s.craft` để chế tạo.')
 				.setFooter(footer);
-			message.channel.send(embed);
+			message.channel.send({ embeds: [embed] });
 			return;
 		}
 
@@ -98,7 +98,7 @@ module.exports = {
 			}
 		}
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setAuthor(message.author.username, message.author.avatarURL)
 			.setColor('LUMINOUS_VIVID_PINK')
 			.setTitle('🩹 Fixing pickaxe')
@@ -108,7 +108,7 @@ module.exports = {
 			.addField('Bạn có muốn sửa pickaxe này không?', 'Dùng lệnh `s.fix yes` để xác nhận')
 			.setFooter(footer);
 
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 
 	},
 };

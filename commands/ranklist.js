@@ -22,12 +22,12 @@ module.exports = {
 			}
 		}
 
-		const embed = new Discord.RichEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setColor('BLUE')
 			.setTitle('Danh sách các rank')
 			.setDescription(ranksMessage)
 			.setFooter(footer);
 
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	},
 };
