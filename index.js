@@ -33,11 +33,6 @@ client.on('messageCreate', async message => {
 		privateDM.log(message);
 	}
 
-	// Check text channel
-	if (message.channel.type !== 'GUILD_TEXT') {
-		return message.channel.send('Bạn không thể sử dụng bot tại đây!');
-	}
-
 	const pre = message.content.toLowerCase();
 	if (!pre.startsWith(prefix)) return;
 
@@ -47,6 +42,11 @@ client.on('messageCreate', async message => {
 	// Check valid command
 	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 	if (!command) return;
+
+	// Check text channel
+	if (message.channel.type !== 'GUILD_TEXT') {
+		return message.channel.send('Bạn không thể sử dụng bot tại đây!');
+	}
 
 	// Check commands that require args
 	if (command.args && !args.length) {
