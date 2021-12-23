@@ -118,6 +118,6 @@ module.exports = {
 		if (command.usage) data.push(`**Cách dùng:** ${prefix}${command.name} ${command.usage}`);
 		if (command.cooldown) data.push(`**Thời gian chờ:** ${command.cooldown} giây`);
 
-		message.channel.send({ content: data });
+		message.channel.send({ content: data.join('\n') });
 	},
 };
