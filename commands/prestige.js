@@ -43,7 +43,7 @@ module.exports = {
 		const selection = await message.channel.send({ embeds: [embed],  components: [row] });
 
 		const collector = selection.createMessageComponentCollector({
-			filter: interaction => interaction.customId === 'confirm' || interaction.customId === 'cancel' && interaction.user.id === message.author.id,
+			filter: interaction => (interaction.customId === 'confirm' || interaction.customId === 'cancel') && interaction.user.id === message.author.id,
 			time: 60000
 		});
 
