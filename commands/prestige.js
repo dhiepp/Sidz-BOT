@@ -36,8 +36,8 @@ module.exports = {
 
 		const row = new Discord.MessageActionRow()
 			.addComponents(
-				new Discord.MessageButton().setCustomId('confirm').setStyle('SUCCESS').setEmoji('✅').setLabel('Xác nhận'),
-				new Discord.MessageButton().setCustomId('cancel').setStyle('DANGER').setEmoji('❎').setLabel('Hủy bỏ'),
+				new Discord.MessageButton().setCustomId('confirm').setStyle('SUCCESS').setEmoji('✔').setLabel('Xác nhận'),
+				new Discord.MessageButton().setCustomId('cancel').setStyle('DANGER').setEmoji('❌').setLabel('Hủy bỏ'),
 			);
 
 		const selection = await message.channel.send({ embeds: [embed],  components: [row] });
@@ -59,7 +59,7 @@ module.exports = {
 			default:
 				break;
 			}
-			await interaction.update({ embeds: [embed] });
+			await interaction.update({ embeds: [embed], components: []  });
 		});
 
 		collector.on('end', async () => {
