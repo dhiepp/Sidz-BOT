@@ -32,35 +32,40 @@ module.exports = {
 			.setDescription(`Cấp độ tiếp theo: **${nextPres}**\nGiá bán khoáng sản: **x${newMul}**`)
 			.addField('⚠️ Lưu ý', 'Sau khi lên cấp những thứ sau sẽ được reset:'
 				+ `\n- ${dollar.icon} **${dollar.name}** và ${experience.icon} **${experience.name}**\n- Rương đồ và Pickaxe của bạn`)
-			.addField('Xác nhận', 'React với ✅ để xác nhận lên cấp')
 			.setFooter('Yêu cầu này sẽ hết hạn sau 10 giây');
 
-		const selection = await message.channel.send({ embeds: [embed] });
-		await selection.react('✅');
-		await selection.react('❎');
+		const row = new Discord.MessageActionRow()
+			.addComponents(
+				new Discord.MessageButton().setCustomId('confirm').setStyle('SUCCESS').setEmoji('✅').setLabel('Xác nhận'),
+				new Discord.MessageButton().setCustomId('cancel').setStyle('DANGER').setEmoji('❎').setLabel('Hủy bỏ'),
+			);
 
-		const filter = (reaction, reactor) => {
-			return ['✅', '❎'].includes(reaction.emoji.name) && reactor.id === message.author.id;
-		};
+		const selection = await message.channel.send({ embeds: [embed],  components: [row] });
 
-		selection.awaitReactions(filter, { max: 1, time: 10000, errors: ['time'] })
-			.then(collected => {
-				const reaction = collected.first();
+		const collector = selection.createMessageComponentCollector({
+			filter: interaction => interaction.customId === 'confirm' || interaction.customId === 'cancel' && interaction.user.id === message.author.id,
+			time: 60000
+		});
 
-				if (reaction.emoji.name === '✅') {
-					embed.setColor('GREY').setFooter('Yêu cầu này đã được xác nhận');
-					prestigeUp(message, nextPres);
-				}
-				else {
-					embed.setColor('GREY').setFooter('Yêu cầu này đã bị hủy');
-				}
-				selection.edit({ embeds: [embed] });
-			})
-			.catch(() => {
-				selection.clearReactions();
-				embed.setColor('GREY').setFooter('Yêu cầu này đã hết thời gian');
-				selection.edit({ embeds: [embed] });
-			});
+		collector.on('collect', async interaction => {
+			switch (interaction.customId) {
+			case 'confirm':
+				embed.setColor('GREY').setFooter('Yêu cầu này đã được xác nhận');
+				prestigeUp(message, nextPres);
+				break;
+			case 'next':
+				embed.setColor('GREY').setFooter('Yêu cầu này đã bị hủy');
+				break;
+			default:
+				break;
+			}
+			await interaction.update({ embeds: [embed] });
+		});
+
+		collector.on('end', async () => {
+			embed.setColor('GREY').setFooter('Yêu cầu này đã hết thời gian');
+			await selection.edit({ embeds: [embed], components: [] });
+		});
 	},
 };
 
