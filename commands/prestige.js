@@ -53,7 +53,7 @@ module.exports = {
 				embed.setColor('GREY').setFooter('Yêu cầu này đã được xác nhận');
 				prestigeUp(message, nextPres);
 				break;
-			case 'next':
+			case 'cancel':
 				embed.setColor('GREY').setFooter('Yêu cầu này đã bị hủy');
 				break;
 			default:
