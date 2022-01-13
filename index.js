@@ -96,7 +96,7 @@ client.on('messageCreate', async message => {
 
 	// Execute command
 	try {
-		(command.execute(message, args));
+		await command.execute(message, args);
 	}
 	catch (error) {
 		console.error(error);
